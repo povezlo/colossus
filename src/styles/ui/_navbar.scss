@@ -1,0 +1,29 @@
+#navbarText.navbar-collapse {
+  display: flex;
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+
+  #navbarNav li a {
+    text-decoration: none;
+    padding: 25px 0 20px 0;
+    margin-right: 30px;
+    display: inline-block;
+    border-bottom: 3px solid transparent;
+    color: #1371c8;
+
+    &:hover {
+      text-decoration: dashed!important;
+    }
+  }
+}
+.navbar {
+  background-color: #fff;
+  box-shadow: 0 0 50px #e1e1e1;
+
+  li a.active-link {
+      border-bottom: 3px solid #f05023!important;
+      font-weight: 600;
+      color: #f05023!important;
+  }
+}

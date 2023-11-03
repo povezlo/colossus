@@ -96,22 +96,5 @@
         "amount": 5
       }
     ]
-  },
-  {
-    "name": "Black Store",
-    "products": [
-      {
-        "id": 2,
-        "amount": 5
-      },
-      {
-        "id": 4,
-        "amount": 31
-      },
-      {
-        "id": 1,
-        "amount": 5
-      }
-    ]
   }
 ]
