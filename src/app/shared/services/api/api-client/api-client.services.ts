@@ -25,4 +25,25 @@ export class ApiClientService {
 
     return this.http.get<T>(url, { params });
   }
+
+  post<T>(path: string, params?: any): Observable<T> {
+    const url = `${this.baseUrl}/${path}`;
+    let httpParams: any;
+
+    if (params) {
+      httpParams = new HttpParams();
+      Object.keys(params).forEach(function (key) {
+        httpParams.append(key, params[key]);
+      });
+    }
+    console.log({ params });
+
+    return this.http.post<T>(url, params);
+  }
+
+  delete<T>(path: string, params: { name: string }): Observable<T> {
+    const url = `${this.baseUrl}/${path}`;
+
+    return this.http.delete<T>(url, { body: params });
+  }
 }
