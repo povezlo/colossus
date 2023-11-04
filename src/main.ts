@@ -1,10 +1,5 @@
 import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import {
-  PreloadAllModules,
-  provideRouter,
-  withDebugTracing,
-  withPreloading,
-} from '@angular/router';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import {
@@ -24,7 +19,7 @@ import { AppComponent } from './app/app.component';
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule, BrowserAnimationsModule),
-    provideRouter(routes, withPreloading(PreloadAllModules), withDebugTracing()),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
     provideClientHydration(),
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),

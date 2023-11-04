@@ -1,22 +1,20 @@
 import { Route } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { StoresPageComponent } from './pages/stores-page/stores-page.component';
 
 export const routes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'stores',
   },
   {
     path: 'home',
     title: 'Home',
-    component: HomePageComponent,
+    loadChildren: () => import('./pages/home-page/home-page-routes').then(m => m.routes),
   },
   {
     path: 'stores',
-    title: 'Stores',
-    component: StoresPageComponent,
+    title: 'Store',
+    loadChildren: () => import('./pages/stores-page/stores-page-routes').then(m => m.routes),
   },
   {
     path: '**',

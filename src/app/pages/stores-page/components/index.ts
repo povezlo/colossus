@@ -1,1 +1,1 @@
-export * from './store-list/store-list.component';
+export * from './store/store.component';
