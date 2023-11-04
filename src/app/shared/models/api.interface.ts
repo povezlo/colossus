@@ -1,3 +1,3 @@
 export interface IHttpParams {
-	[key: string]: string | number | boolean;
+  [key: string]: string | number | boolean;
 }

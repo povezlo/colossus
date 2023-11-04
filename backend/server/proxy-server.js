@@ -25,7 +25,7 @@ app.get(ROUTE_STORES, (_, res) => {
   });
 });
 
-app.post(ROUTE_STORES, cors(), (req, res) => {
+app.put(ROUTE_STORES, cors(), (req, res) => {
   fs.readFile(STORES_JSON_FILE_PATH, (err, data) => {
     if (err) {
       console.error(err);

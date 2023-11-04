@@ -1,20 +1,18 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpErrorResponse } from '@angular/common/http';
-
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { NotificationService } from '../services';
+import { LoaderService, SharedLoaderState } from '../components/shared-loader';
 
-@Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
-  notification = inject(NotificationService);
+export function ErrorInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
+  const notification = inject(NotificationService);
+  const loader = inject(LoaderService);
 
-  intercept(request: HttpRequest<any>, next: HttpHandler) {
-    return next.handle(request).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.notification.showError(`Error: ${error.name}: ${error.status}`);
-        return throwError(() => error.message);
-      })
-    );
-  }
+  return next(request).pipe(
+    catchError((error: HttpErrorResponse) => {
+      notification.showError(`Error: ${error.name}: ${error.status}`);
+      loader.loaderStateSource$.next(SharedLoaderState.error);
+      return throwError(() => error.message);
+    })
+  );
 }

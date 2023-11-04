@@ -4,15 +4,16 @@
   flex-direction: column;
 
   .app-header {
-    position: sticky;
-    top: 0;
-    z-index: 998;
-  }
+      position: sticky;
+      top: 0;
+      z-index: 998;
+    }
 
-  main {
-    display: flex;
-    flex-grow: 1;
-  }
+    main {
+      display: flex;
+      flex-grow: 1;
+      border-bottom: 1px solid rgb(64, 64, 64);
+    }
 
   .navbar {
     padding: 1.5rem;

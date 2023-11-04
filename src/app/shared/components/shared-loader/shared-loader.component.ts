@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Observable } from 'rxjs';
 import { SharedLoaderState } from './enum';
 import { LoaderService } from './loader.service';
-import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-shared-loader',
@@ -15,7 +15,7 @@ export class SharedLoaderComponent implements OnInit {
   sharedLoaderState = SharedLoaderState;
   state$: Observable<SharedLoaderState> | null = null;
 
-  loaderService = inject(LoaderService);
+  private loaderService = inject(LoaderService);
 
   ngOnInit(): void {
     this.state$ = this.loaderService.loaderState$;

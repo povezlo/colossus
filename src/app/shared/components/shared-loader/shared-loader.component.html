@@ -1,16 +1,16 @@
 <div *ngIf="state$ | async as state">
   <div [class.wrapper-spinner]="state === sharedLoaderState.loading">
-    <h3 *ngIf="state === sharedLoaderState.loading">{{ state }}...</h3>
+    <h5 *ngIf="state === sharedLoaderState.loading" class="text-white p-3">{{ state }}...</h5>
 
     <div
       *ngIf="state === sharedLoaderState.loading"
       class="spinner-border text-primary"
       role="status">
-      <span class="visually-hidden">Loading...</span>
+      <span class="visually-hidden text-white">Loading...</span>
     </div>
 
-    <section class="message-container" *ngIf="state !== sharedLoaderState.loaded">
-      <p *ngIf="state === sharedLoaderState.error">Oops! Something wrong!</p>
+    <section class="text-white" *ngIf="state !== sharedLoaderState.loaded">
+      <p *ngIf="state === sharedLoaderState.error">Oops! Failed to retrieve data</p>
       <p *ngIf="state === sharedLoaderState.noData">Sorry, no data here.</p>
     </section>
 
