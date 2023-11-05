@@ -10,11 +10,10 @@ import {
 
 import { provideToastr } from 'ngx-toastr';
 
-import { BASE_URL } from './app/shared';
+import { provideBaseUrl, ErrorInterceptor, provideInitializeApp } from './app/core';
 import { environment } from './environments/environment.prod';
 import { routes } from './app/routes';
 import { AppComponent } from './app/app.component';
-import { ErrorInterceptor } from './app/shared/interceptors';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -23,11 +22,9 @@ bootstrapApplication(AppComponent, {
     provideClientHydration(),
     provideHttpClient(withInterceptors([ErrorInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
+    provideBaseUrl(environment.baseURL),
+    provideInitializeApp(),
     provideAnimations(),
     provideToastr(),
-    {
-      provide: BASE_URL,
-      useValue: environment.baseURL,
-    },
   ],
 }).catch(err => console.error(err));

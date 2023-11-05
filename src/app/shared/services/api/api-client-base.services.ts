@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { BASE_URL } from '@shared/injectTokens';
+import { BASE_URL } from 'src/app/core';
 
 const CONTENT_TYPE = 'application/x-www-form-urlencoded';
 @Injectable({ providedIn: 'root' })

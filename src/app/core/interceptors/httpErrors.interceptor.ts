@@ -1,8 +1,8 @@
 import { HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { NotificationService } from '../services';
-import { LoaderService, SharedLoaderState } from '../components/shared-loader';
+import { NotificationService } from '@shared/services';
+import { LoaderService, SharedLoaderState } from '@shared/components';
 
 export function ErrorInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
   const notification = inject(NotificationService);

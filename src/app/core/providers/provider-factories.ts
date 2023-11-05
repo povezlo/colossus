@@ -1,0 +1,20 @@
+import { APP_INITIALIZER } from '@angular/core';
+import { LoaderService, SharedLoaderState } from '@shared*';
+import { BASE_URL } from '../injectTokens';
+
+export function provideBaseUrl(value: string) {
+  return { provide: BASE_URL, useValue: value };
+}
+
+export function provideInitializeApp() {
+  return {
+    provide: APP_INITIALIZER,
+    useFactory: initializeAppFactory,
+    multi: true,
+    deps: [LoaderService],
+  };
+}
+
+function initializeAppFactory(loader: LoaderService): () => void {
+  return () => loader.loaderStateSource$.next(SharedLoaderState.loading);
+}
