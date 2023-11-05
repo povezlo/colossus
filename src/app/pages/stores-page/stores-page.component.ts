@@ -11,13 +11,13 @@ import {
   ProductsService,
 } from '@shared/components';
 import { ApiStoresService } from '@shared/services';
-import { IStore } from '@shared/models';
 import { StoreComponent } from './components';
+import { StoreListComponent } from './components/store-list/store-list.component';
 
 @Component({
   selector: 'app-stores',
   standalone: true,
-  imports: [AsyncPipe, NgIf, NgForOf, LoaderComponent, StoreComponent],
+  imports: [AsyncPipe, NgIf, NgForOf, LoaderComponent, StoreComponent, StoreListComponent],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

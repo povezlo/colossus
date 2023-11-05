@@ -1,14 +1,14 @@
 <div class="row h-100">
   <div class="col-9 px-3 pt-4 border-end border-2">
     <app-loader>
-      <div class="container">
-        <div class="row text-white g-3" *ngIf="stores$ | async as stores">
-          <div class="col-3" *ngFor="let store of stores; let i = index; trackBy: trackByFn">
-            <app-store [store]="store" />
-          </div>
-        </div>
-      </div>
+      <app-store-list *ngIf="stores$ | async as stores">
+        <app-store
+          class="col-3"
+          *ngFor="let store of stores; let i = index; trackBy: trackByFn"
+          [store]="store" />
+      </app-store-list>
     </app-loader>
   </div>
+
   <div class="col-3 px-3 pt-4">.col-6</div>
 </div>
