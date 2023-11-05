@@ -4,7 +4,7 @@ export const routes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'stores',
+    redirectTo: 'home',
   },
   {
     path: 'home',

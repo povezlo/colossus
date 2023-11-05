@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 
 import { Observable, tap } from 'rxjs';
 
-import { LoaderComponent, LoaderService, LoaderState } from '@shared/components';
+import { LoaderComponent, LoaderService, LoaderState, ProductsService } from '@shared/components';
 import { ApiStoresService } from '@shared/services';
 import { IStore } from '@shared/models';
 
@@ -20,6 +20,7 @@ export class StoresPageComponent implements OnInit {
 
   private storesService = inject(ApiStoresService);
   private loader = inject(LoaderService);
+  private products = inject(ProductsService);
 
   ngOnInit(): void {
     this.loader.loaderStateSource$.next(LoaderState.loading);
@@ -32,5 +33,7 @@ export class StoresPageComponent implements OnInit {
         this.loader.loaderStateSource$.next(LoaderState.loaded);
       })
     );
+
+    this.products.getProducts().subscribe(products => console.log(products));
   }
 }
