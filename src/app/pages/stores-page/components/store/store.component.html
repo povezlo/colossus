@@ -1,9 +1,17 @@
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-    <p class="card-text"></p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
+<div *ngIf="store; else noStore" class="card bg-dark text-white border-white">
+  <div class="card-body pt-0 px-2">
+    <div class="d-flex justify-content-between">
+      <div class="fs-1 lh-1 p-0">{{ store.products | totalAmount }}</div>
+      <div class="small-text pt-1">{{ store.name }}</div>
+    </div>
+
+    <div *ngIf="mostPopularProduct" class="d-flex flex-column text-end mt-auto">
+      <div class="card-text">Most Popular:</div>
+      <div class="most-popular-product-text">
+        {{ mostPopularProduct.name }} - In Stock {{ mostPopularProduct.amount }} items
+      </div>
+    </div>
   </div>
 </div>
+
+<ng-template #noStore>No store </ng-template>
