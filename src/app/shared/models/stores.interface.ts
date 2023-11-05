@@ -9,4 +9,5 @@ export interface ISharedStore extends IStore {
   name: string;
   products: IProductStore[];
   mostPopularProduct: IMostPopularProduct;
+  totalAmountProducts: number;
 }

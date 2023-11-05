@@ -11,13 +11,20 @@ import {
   ProductsService,
 } from '@shared/components';
 import { ApiStoresService } from '@shared/services';
-import { StoreComponent } from './components';
-import { StoreListComponent } from './components/store-list/store-list.component';
+import { NewStoreWidgetComponent, StoreComponent, StoreListComponent } from './components';
 
 @Component({
   selector: 'app-stores',
   standalone: true,
-  imports: [AsyncPipe, NgIf, NgForOf, LoaderComponent, StoreComponent, StoreListComponent],
+  imports: [
+    AsyncPipe,
+    NgIf,
+    NgForOf,
+    LoaderComponent,
+    StoreComponent,
+    StoreListComponent,
+    NewStoreWidgetComponent,
+  ],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,16 +49,9 @@ export class StoresPageComponent implements OnInit {
       switchMap(stores => {
         return this.productsService.getProducts().pipe(
           map(productMap => {
-            return stores.map(store => {
-              const product = this.productsService.findMostPopularyProducts(store.products);
-              return {
-                ...store,
-                mostPopularProduct: {
-                  name: product ? productMap.get(product.id) : null,
-                  amount: product ? product.amount : null,
-                },
-              };
-            });
+            return this.productsService
+              .transformStore(stores, productMap)
+              .sort((a, b) => b.totalAmountProducts - a.totalAmountProducts);
           })
         );
       }),

@@ -1,7 +1,7 @@
 <div *ngIf="store; else noStore" class="card bg-dark text-white border-white rounded-0">
   <div class="card-body d-flex flex-column justify-content-between pt-0 pb-2 px-2">
     <div class="d-flex justify-content-between">
-      <div class="fs-1 lh-1 p-0">{{ store.products | totalAmount }}</div>
+      <div class="fs-1 lh-1 p-0">{{ store.totalAmountProducts }}</div>
       <div class="small-text pt-1">{{ store.name }}</div>
     </div>
 

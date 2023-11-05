@@ -1,5 +1,6 @@
 <div class="row h-100">
-  <div class="col-9 px-3 pt-4 border-end border-2">
+  <section class="col-9 px-3 pt-4 border-end border-2">
+    <p class="text-white text-center mt-4 mb-3">Stores</p>
     <app-loader>
       <app-store-list *ngIf="stores$ | async as stores">
         <app-store
@@ -8,7 +9,9 @@
           [store]="store" />
       </app-store-list>
     </app-loader>
-  </div>
+  </section>
 
-  <div class="col-3 px-3 pt-4">.col-6</div>
+  <section class="col-3 px-3 pt-4">
+    <app-new-store-widget />
+  </section>
 </div>
