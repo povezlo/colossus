@@ -1,18 +1,16 @@
 import { AsyncPipe, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import {
-  ApiStoresService,
-  IStore,
-  LoaderService,
-  SharedLoaderComponent,
-  SharedLoaderState,
-} from '@shared*';
+
 import { Observable, tap } from 'rxjs';
+
+import { LoaderComponent, LoaderService, LoaderState } from '@shared/components';
+import { ApiStoresService } from '@shared/services';
+import { IStore } from '@shared/models';
 
 @Component({
   selector: 'app-stores',
   standalone: true,
-  imports: [AsyncPipe, JsonPipe, SharedLoaderComponent],
+  imports: [AsyncPipe, JsonPipe, LoaderComponent],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,14 +22,14 @@ export class StoresPageComponent implements OnInit {
   private loader = inject(LoaderService);
 
   ngOnInit(): void {
-    this.loader.loaderStateSource$.next(SharedLoaderState.loading);
+    this.loader.loaderStateSource$.next(LoaderState.loading);
     this.stores$ = this.storesService.getStores().pipe(
       tap(res => {
         if (!res.length) {
-          this.loader.loaderStateSource$.next(SharedLoaderState.noData);
+          this.loader.loaderStateSource$.next(LoaderState.noData);
           return;
         }
-        this.loader.loaderStateSource$.next(SharedLoaderState.loaded);
+        this.loader.loaderStateSource$.next(LoaderState.loaded);
       })
     );
   }

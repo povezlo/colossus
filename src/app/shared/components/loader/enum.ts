@@ -1,4 +1,4 @@
-export enum SharedLoaderState {
+export enum LoaderState {
   loading = 'loading',
   loaded = 'loaded',
   error = 'error',

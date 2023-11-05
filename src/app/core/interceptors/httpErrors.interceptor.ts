@@ -2,7 +2,7 @@ import { HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/h
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { NotificationService } from '@shared/services';
-import { LoaderService, SharedLoaderState } from '@shared/components';
+import { LoaderService, LoaderState } from '@shared/components';
 
 export function ErrorInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn) {
   const notification = inject(NotificationService);
@@ -11,7 +11,7 @@ export function ErrorInterceptor(request: HttpRequest<unknown>, next: HttpHandle
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
       notification.showError(`Error: ${error.name}: ${error.status}`);
-      loader.loaderStateSource$.next(SharedLoaderState.error);
+      loader.loaderStateSource$.next(LoaderState.error);
       return throwError(() => error.message);
     })
   );

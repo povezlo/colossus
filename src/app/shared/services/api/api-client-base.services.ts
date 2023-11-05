@@ -2,7 +2,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
+
 import { BASE_URL } from 'src/app/core';
+import { IHttpParams } from '@shared/models';
 
 const CONTENT_TYPE = 'application/x-www-form-urlencoded';
 @Injectable({ providedIn: 'root' })
@@ -14,7 +16,7 @@ export class ApiClientBaseService {
     return this.http.get<T>(`${this.baseUrl}/${path}`);
   }
 
-  put<T>(path: string, params: any): Observable<T> {
+  put<T>(path: string, params: IHttpParams): Observable<T> {
     const headers = new HttpHeaders({ 'Content-Type': CONTENT_TYPE });
     const httpParams = new HttpParams({ fromObject: params });
 
