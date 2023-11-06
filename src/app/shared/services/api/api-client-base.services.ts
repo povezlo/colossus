@@ -24,8 +24,6 @@ export class ApiClientBaseService {
   }
 
   delete<T>(path: string, params: { name: string }): Observable<T> {
-    const httpParams = new HttpParams({ fromObject: params });
-
-    return this.http.delete<T>(`${this.baseUrl}/${path}`, { body: httpParams });
+    return this.http.delete<T>(`${this.baseUrl}/${path}`, { body: params });
   }
 }

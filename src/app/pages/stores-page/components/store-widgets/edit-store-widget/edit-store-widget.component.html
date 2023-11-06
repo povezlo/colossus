@@ -1,7 +1,17 @@
 <p class="text-white text-end mt-4">Edit Store</p>
 
-<div class="row">
-  <div class="card col-md-6 mx-md-auto my-5 p-4">
-    
+<ng-container *ngIf="params$ | async as params; else noStore">
+  <div class="card bg-dark text-white border-white rounded-0 focus-ring">
+    <div class="card-body">
+      <h5 class="card-title">{{ params.id }}</h5>
+      <h6 class="card-subtitle mb-2 fs-6 fw-lighter">Selected store</h6>
+
+      <section class="action-btn d-flex justify-content-between">
+        <button (click)="deleteStore()" type="button" class="btn btn-info btn-sm">Delete</button>
+        <button (click)="goBack()" type="button" class="btn btn-danger btn-sm">Cancel</button>
+      </section>
+    </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #noStore>No Store</ng-template>

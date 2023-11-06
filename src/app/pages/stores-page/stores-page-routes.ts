@@ -23,7 +23,7 @@ export const routes: Routes = [
               ).then(c => c.CreateStoreWidgetComponent),
           },
           {
-            path: 'delete',
+            path: 'edit/:id',
             loadComponent: () =>
               import(
                 './components/store-widgets/edit-store-widget/edit-store-widget.component'

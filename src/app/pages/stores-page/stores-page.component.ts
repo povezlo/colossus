@@ -1,4 +1,5 @@
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,17 +11,11 @@ import {
 
 import { Observable, map, tap } from 'rxjs';
 
-import {
-  IProductsMap,
-  ISharedStore,
-  LoaderComponent,
-  LoaderService,
-  LoaderState,
-  ProductsService,
-} from '@shared/components';
-import { ApiStoresService } from '@shared/services';
+import { LoaderComponent, LoaderService, LoaderState } from '@shared/components';
+import { ApiStoresService, ProductsService } from '@shared/services';
+import { IProductsMap, ISharedStore } from '@shared/models';
+import { fadeInAnimation } from '@shared/utils';
 import { StoreComponent, StoreListComponent } from './components';
-import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-stores',
@@ -33,11 +28,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     StoreComponent,
     StoreListComponent,
     RouterOutlet,
-    RouterLink,
   ],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [fadeInAnimation],
 })
 export class StoresPageComponent implements OnInit {
   @Input() productMap: IProductsMap = new Map();
@@ -48,6 +43,7 @@ export class StoresPageComponent implements OnInit {
   private loader = inject(LoaderService);
 
   trackByFn: TrackByFunction<ISharedStore> = (index, _) => index;
+  showFields: boolean[] = [true];
 
   ngOnInit(): void {
     this.InitStores();
@@ -55,6 +51,8 @@ export class StoresPageComponent implements OnInit {
 
   InitStores(): void {
     this.loader.loaderStateSource$.next(LoaderState.loading);
+
+    this.storesService.updateStores();
 
     this.stores$ = this.storesService.getStores().pipe(
       map(stores => {
@@ -67,7 +65,6 @@ export class StoresPageComponent implements OnInit {
           this.loader.loaderStateSource$.next(LoaderState.noData);
           return;
         }
-
         this.loader.loaderStateSource$.next(LoaderState.loaded);
       })
     );

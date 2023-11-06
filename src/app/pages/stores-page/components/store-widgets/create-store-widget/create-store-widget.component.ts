@@ -16,8 +16,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { fadeInAnimation } from './animation';
 import { Subscription } from 'rxjs';
+import { fadeInAnimation } from '@shared/utils';
 import { IProductsMap } from '@shared/models';
 
 @Component({
@@ -34,7 +34,6 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   diagnosesForm!: FormGroup;
 
   showFields: boolean[] = [true];
-  minDate = new Date();
   hasError = false;
 
   subscription = new Subscription();

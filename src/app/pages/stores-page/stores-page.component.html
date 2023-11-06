@@ -6,12 +6,11 @@
         <app-store
           class="col-3"
           *ngFor="let store of stores; let i = index; trackBy: trackByFn"
-          [store]="store" />
+          [@fadeIn]="showFields[i]"
+          [store]="store"
+          [tabindex]="i" />
       </app-store-list>
     </app-loader>
-    <a [routerLink]="['./', { outlets: { widget: 'create' } }]">create</a>
-
-    <a [routerLink]="['./', { outlets: { widget: 'delete' } }]">delete</a>
   </aside>
 
   <aside class="col-3 px-3 pt-4"><router-outlet name="widget"></router-outlet></aside>
