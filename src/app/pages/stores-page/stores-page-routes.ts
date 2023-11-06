@@ -16,6 +16,11 @@ export const routes: Routes = [
         outlet: 'widget',
         children: [
           {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'create',
+          },
+          {
             path: 'create',
             loadComponent: () =>
               import(
