@@ -19,7 +19,7 @@ import {
   ProductsService,
 } from '@shared/components';
 import { ApiStoresService } from '@shared/services';
-import { NewStoreWidgetComponent, StoreComponent, StoreListComponent } from './components';
+import { StoreWidgetComponent, StoreComponent, StoreListComponent } from './components';
 
 @Component({
   selector: 'app-stores',
@@ -31,7 +31,7 @@ import { NewStoreWidgetComponent, StoreComponent, StoreListComponent } from './c
     LoaderComponent,
     StoreComponent,
     StoreListComponent,
-    NewStoreWidgetComponent,
+    StoreWidgetComponent,
   ],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],

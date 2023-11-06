@@ -21,15 +21,15 @@ import { Subscription } from 'rxjs';
 import { IProductsMap } from '@shared*';
 
 @Component({
-  selector: 'app-new-store-widget',
+  selector: 'app-store-widget',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, JsonPipe],
-  templateUrl: './new-store-widget.component.html',
-  styleUrls: ['./new-store-widget.component.scss'],
+  templateUrl: './store-widget.component.html',
+  styleUrls: ['./store-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation],
 })
-export class NewStoreWidgetComponent implements OnInit, OnDestroy {
+export class StoreWidgetComponent implements OnInit, OnDestroy {
   @Input({ required: true }) productMap: IProductsMap = new Map();
   diagnosesForm!: FormGroup;
 
