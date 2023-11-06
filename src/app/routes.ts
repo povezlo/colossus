@@ -4,11 +4,6 @@ import { ProductsService } from './shared/services';
 
 export const routes: Route[] = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'home',
-  },
-  {
     path: 'home',
     title: 'Home',
     loadChildren: () => import('./pages/home-page/home-page-routes').then(m => m.routes),
@@ -18,6 +13,11 @@ export const routes: Route[] = [
     title: 'Store',
     resolve: { productMap: () => inject(ProductsService).getProducts() },
     loadChildren: () => import('./pages/stores-page/stores-page-routes').then(m => m.routes),
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
   },
   {
     path: '**',

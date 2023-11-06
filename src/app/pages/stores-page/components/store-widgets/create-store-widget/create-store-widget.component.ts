@@ -18,18 +18,18 @@ import {
 } from '@angular/forms';
 import { fadeInAnimation } from './animation';
 import { Subscription } from 'rxjs';
-import { IProductsMap } from '@shared*';
+import { IProductsMap } from '@shared/models';
 
 @Component({
-  selector: 'app-store-widget',
+  selector: 'app-create-store-widget',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, JsonPipe],
-  templateUrl: './store-widget.component.html',
-  styleUrls: ['./store-widget.component.scss'],
+  templateUrl: './create-store-widget.component.html',
+  styleUrls: ['./create-store-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation],
 })
-export class StoreWidgetComponent implements OnInit, OnDestroy {
+export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   @Input({ required: true }) productMap: IProductsMap = new Map();
   diagnosesForm!: FormGroup;
 

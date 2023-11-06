@@ -19,7 +19,8 @@ import {
   ProductsService,
 } from '@shared/components';
 import { ApiStoresService } from '@shared/services';
-import { StoreWidgetComponent, StoreComponent, StoreListComponent } from './components';
+import { StoreComponent, StoreListComponent } from './components';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-stores',
@@ -31,7 +32,8 @@ import { StoreWidgetComponent, StoreComponent, StoreListComponent } from './comp
     LoaderComponent,
     StoreComponent,
     StoreListComponent,
-    StoreWidgetComponent,
+    RouterOutlet,
+    RouterLink,
   ],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],

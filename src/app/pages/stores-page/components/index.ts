@@ -1,2 +1,2 @@
 export * from './stores-sidebar';
-export * from './store-widget';
+export * from './store-widgets';
