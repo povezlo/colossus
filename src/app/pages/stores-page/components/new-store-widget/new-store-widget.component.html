@@ -1,1 +1,45 @@
 <p class="text-white text-end mt-4">New Store</p>
+
+<div class="row">
+  <div class="card col-md-6 mx-md-auto my-5 p-4">
+    <form [formGroup]="diagnosesForm" data-toggle="validator" role="form" class="form-inline">
+      <div class="form-group row">
+        <div
+          formArrayName="diagnosis"
+          *ngFor="let item of diagnosisControl; let i = index"
+          [@fadeIn]="showFields[i]">
+          <div [formGroupName]="i" class="row">
+            <div class="col-xs-12 col-12 col-md-6 mt-3">
+              <select
+                formControlName="select"
+                class="form-select"
+                aria-label="Default select example">
+                <option *ngFor="let opt of productMap.entries()">
+                  {{ opt | json }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-xs-12 col-12 col-md-6 mt-3">
+              <input
+                formControlName="note"
+                type="text"
+                placeholder="коментар"
+                class="form-control" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <button (click)="addFormGroup()" type="button" class="btn link-primary px-0">
+          додати ще
+        </button>
+      </div>
+
+      <div class="form-group d-grid mb-3">
+        <button type="button" class="btn btn-outline-primary btn-lg">Сформувати JSON</button>
+      </div>
+    </form>
+  </div>
+</div>

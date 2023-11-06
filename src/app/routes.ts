@@ -1,4 +1,6 @@
+import { inject } from '@angular/core';
 import { Route } from '@angular/router';
+import { ProductsService } from './shared/services';
 
 export const routes: Route[] = [
   {
@@ -14,6 +16,7 @@ export const routes: Route[] = [
   {
     path: 'stores',
     title: 'Store',
+    resolve: { productMap: () => inject(ProductsService).getProducts() },
     loadChildren: () => import('./pages/stores-page/stores-page-routes').then(m => m.routes),
   },
   {

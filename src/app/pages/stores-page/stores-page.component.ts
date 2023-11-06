@@ -1,9 +1,17 @@
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, TrackByFunction, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  TrackByFunction,
+  inject,
+} from '@angular/core';
 
-import { Observable, map, switchMap, tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 
 import {
+  IProductsMap,
   ISharedStore,
   LoaderComponent,
   LoaderService,
@@ -30,6 +38,7 @@ import { NewStoreWidgetComponent, StoreComponent, StoreListComponent } from './c
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoresPageComponent implements OnInit {
+  @Input() productMap: IProductsMap = new Map();
   stores$: Observable<ISharedStore[]> | null = null;
 
   private storesService = inject(ApiStoresService);
@@ -46,14 +55,10 @@ export class StoresPageComponent implements OnInit {
     this.loader.loaderStateSource$.next(LoaderState.loading);
 
     this.stores$ = this.storesService.getStores().pipe(
-      switchMap(stores => {
-        return this.productsService.getProducts().pipe(
-          map(productMap => {
-            return this.productsService
-              .transformStore(stores, productMap)
-              .sort((a, b) => b.totalAmountProducts - a.totalAmountProducts);
-          })
-        );
+      map(stores => {
+        return this.productsService
+          .transformStore(stores, this.productMap)
+          .sort((a, b) => b.totalAmountProducts - a.totalAmountProducts);
       }),
       tap(stores => {
         if (!stores.length) {
