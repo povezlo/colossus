@@ -1,2 +1,2 @@
 export * from './create-store-widget';
-export * from './delete-store-widget';
+export * from './edit-store-widget';

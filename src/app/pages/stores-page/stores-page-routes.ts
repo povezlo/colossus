@@ -26,8 +26,8 @@ export const routes: Routes = [
             path: 'delete',
             loadComponent: () =>
               import(
-                './/components/store-widgets/delete-store-widget/delete-store-widget.component'
-              ).then(c => c.DeleteStoreWidgetComponent),
+                './components/store-widgets/edit-store-widget/edit-store-widget.component'
+              ).then(c => c.EditStoreWidgetComponent),
           },
         ],
       },
