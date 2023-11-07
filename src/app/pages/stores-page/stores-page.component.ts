@@ -52,19 +52,17 @@ export class StoresPageComponent implements OnInit {
   InitStores(): void {
     this.loader.loaderStateSource$.next(LoaderState.loading);
 
-    this.storesService.updateStores();
-
     this.stores$ = this.storesService.getStores().pipe(
       map(stores => {
+        if (!stores.length) {
+          this.loader.loaderStateSource$.next(LoaderState.noData);
+          return [];
+        }
         return this.productsService
           .transformStore(stores, this.productMap)
           .sort((a, b) => b.totalAmountProducts - a.totalAmountProducts);
       }),
-      tap(stores => {
-        if (!stores.length) {
-          this.loader.loaderStateSource$.next(LoaderState.noData);
-          return;
-        }
+      tap(() => {
         this.loader.loaderStateSource$.next(LoaderState.loaded);
       })
     );

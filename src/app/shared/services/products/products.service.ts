@@ -1,9 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map, of, shareReplay } from 'rxjs';
-import { IProduct, IProductStore, IProductsMap, ISharedStore, IStore } from '@shared/models';
+import {
+  IProduct,
+  IProductStore,
+  IProductsMap,
+  ISharedStore,
+  IStore,
+  Pathname,
+} from '@shared/models';
 import { ApiClientBaseService } from '@shared/services/api';
-
-const ROUTE_PRODUCTS = 'products';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -15,7 +20,7 @@ export class ProductsService {
     if (this.cacheProducts.size) {
       return of(this.cacheProducts);
     } else {
-      return this.http.get<IProduct[]>(ROUTE_PRODUCTS).pipe(
+      return this.http.get<IProduct[]>(Pathname.ROUTE_PRODUCTS).pipe(
         shareReplay(1),
         map((response: IProduct[]) => {
           this.cacheProducts = this.transformToMap(response);

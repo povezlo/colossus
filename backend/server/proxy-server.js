@@ -5,7 +5,6 @@ const fs = require('fs');
 
 const DB_PATH = path.join(__dirname, '../db');
 const STORES_JSON_FILE_PATH = `${DB_PATH}/stores.json`;
-const ROUTE_STORES = '/stores';
 const SERVER_ERROR_MESSAGE = 'Server error';
 
 const app = express();
@@ -14,7 +13,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get(ROUTE_STORES, (_, res) => {
+app.get('/stores', (_, res) => {
   fs.readFile(STORES_JSON_FILE_PATH, (err, data) => {
     if (err) {
       console.error('my error', err, 'my res', res);
@@ -25,7 +24,7 @@ app.get(ROUTE_STORES, (_, res) => {
   });
 });
 
-app.put(ROUTE_STORES, cors(), (req, res) => {
+app.put('/createStores', cors(), (req, res) => {
   fs.readFile(STORES_JSON_FILE_PATH, (err, data) => {
     if (err) {
       console.error(err);
@@ -45,7 +44,7 @@ app.put(ROUTE_STORES, cors(), (req, res) => {
   });
 });
 
-app.delete(ROUTE_STORES, cors(), (req, res) => {
+app.delete('/deleteStores', cors(), (req, res) => {
   fs.readFile(STORES_JSON_FILE_PATH, (err, data) => {
     if (err) {
       console.error(err);
