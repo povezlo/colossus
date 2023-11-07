@@ -39,7 +39,7 @@ app.put('/createStores', cors(), (req, res) => {
         console.error(err);
         return res.status(500).send(SERVER_ERROR_MESSAGE);
       }
-      res.status(201).json(newStore);
+      res.status(201).json({ message: 'The store has been successfully created' });
     });
   });
 });

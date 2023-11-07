@@ -1,9 +1,17 @@
-<input
-  type="text"
-  class="app-input"
-  [value]="value"
-  [placeholder]="placeholder"
-  [disabled]="isDisabled"
-  (keyup)="onKeyup($event)"
-  (blur)="onBlur()"
->
+<div class="input-group has-validation">
+  <span *ngIf="label" class="input-group-text" id="inputGroup">{{ label }}</span>
+
+  <input
+    type="text"
+    class="form-control"
+    id="validation"
+    aria-describedby="inputGroup validationFeedback"
+    [class.is-invalid]="hasError"
+    [value]="value"
+    [placeholder]="placeholder"
+    [disabled]="isDisabled"
+    [required]="required"
+    (change)="onKeyup($event)" />
+
+  <div id="validationFeedback" class="invalid-feedback">{{ getErrorMessage() }}</div>
+</div>

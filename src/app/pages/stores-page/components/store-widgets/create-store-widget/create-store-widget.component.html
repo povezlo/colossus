@@ -1,12 +1,25 @@
 <p class="text-white text-end mt-4">New Store</p>
 
 <div class="row">
-  <div class="card col-md-6 mx-md-auto my-5 p-4">
-    <form [formGroup]="diagnosesForm" data-toggle="validator" role="form" class="form-inline">
-      <div class="form-group row">
-        <div
-          formArrayName="diagnosis"
-          *ngFor="let item of diagnosisControl; let i = index"
+  <div class="card bg-dark text-white">
+    <form
+      [formGroup]="storeForm"
+      (ngSubmit)="createStore()"
+      novalidate
+      data-toggle="validator"
+      role="form"
+      class="needs-validation">
+      <div class="form-group">
+        <div class="row">
+          <app-input
+            [control]="storeName"
+            [required]="true"
+            formControlName="storeName"
+            placeholder="Name..."></app-input>
+        </div>
+        <!-- <div
+          formArrayName="store"
+          *ngFor="let item of storeFormControl; let i = index"
           [@fadeIn]="showFields[i]">
           <div [formGroupName]="i" class="row">
             <div class="col-xs-12 col-12 col-md-6 mt-3">
@@ -14,9 +27,9 @@
                 formControlName="select"
                 class="form-select"
                 aria-label="Default select example">
-                <!-- <option *ngFor="let opt of productMap.entries()">
+                <option *ngFor="let opt of productMap.entries()">
                   {{ opt | json }}
-                </option> -->
+                </option>
               </select>
             </div>
 
@@ -28,17 +41,15 @@
                 class="form-control" />
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <div class="form-group mb-3">
-        <button (click)="addFormGroup()" type="button" class="btn link-primary px-0">
-          додати ще
-        </button>
+        <button (click)="addFormGroup()" type="button" class="btn link-primary px-0">додати ще</button>
       </div>
 
       <div class="form-group d-grid mb-3">
-        <button type="button" class="btn btn-outline-primary btn-lg">Сформувати JSON</button>
+        <button type="submit" class="btn btn-success">Save</button>
       </div>
     </form>
   </div>

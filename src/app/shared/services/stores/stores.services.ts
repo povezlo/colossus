@@ -12,13 +12,16 @@ export class ApiStoresService {
   private readonly notification = inject(NotificationService);
 
   getStores(): Observable<IStore[]> {
-    return this.refreshStores$.pipe(
-      switchMap(() => this.http.get<IStore[]>(Pathname.ROUTE_STORES))
-    );
+    return this.refreshStores$.pipe(switchMap(() => this.http.get<IStore[]>(Pathname.ROUTE_STORES)));
   }
 
-  createStore(params: IStore): Observable<IStore> {
-    return this.http.put<IStore>(Pathname.ROUTE_CREATE_STORES, params);
+  createStore(params: IStore): Observable<ISuccessResponse> {
+    return this.http.put<ISuccessResponse>(Pathname.ROUTE_CREATE_STORES, params).pipe(
+      tap(res => {
+        this.notification.showSuccess(`${res.message}: ${params.name}`);
+        this.refreshStores();
+      })
+    );
   }
 
   deleteStore(params: Pick<IStore, 'name'>): Observable<ISuccessResponse> {

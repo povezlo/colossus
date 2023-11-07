@@ -1,8 +1,13 @@
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { CommonModule } from '@angular/common';
+import { Component, forwardRef, Input, Output, EventEmitter, inject } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl } from '@angular/forms';
+import { PropagateFn } from 'src/app/shared/models';
+import { ValidatorService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-input',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   providers: [
@@ -10,30 +15,36 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputComponent),
       multi: true,
-    }
-  ]
+    },
+  ],
 })
 export class InputComponent implements ControlValueAccessor {
-
   @Input() placeholder = '';
+  @Input() label = '';
+  @Input() required = false;
+  @Input() isDisabled = false;
+  @Input({ required: true }) control: AbstractControl | null = null;
   @Output() changed = new EventEmitter<string>();
+
   value = '';
-  isDisabled: boolean | null = null;
+  private propagateChange?: PropagateFn<string>;
+  private propagateTouched?: PropagateFn<void>;
 
-  constructor() {}
+  validatorService = inject(ValidatorService);
 
-  private propagateChange: Function = () => {};
-  private propagateTouched: Function = () => {};
+  get hasError(): boolean {
+    return !!this.control?.errors && this.control?.dirty;
+  }
 
   writeValue(value: string): void {
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: PropagateFn<string>): void {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: PropagateFn<void>): void {
     this.propagateTouched = fn;
   }
 
@@ -43,11 +54,15 @@ export class InputComponent implements ControlValueAccessor {
 
   onKeyup(eventInput: Event): void {
     this.value = (<HTMLInputElement>eventInput.target).value;
-    this.propagateChange(this.value);
+    if (this.propagateChange) this.propagateChange(this.value);
     this.changed.emit(this.value);
   }
 
   onBlur(): void {
-    this.propagateTouched();
+    if (this.propagateTouched) this.propagateTouched();
+  }
+
+  getErrorMessage(): string {
+    return this.control?.errors ? this.validatorService.getErrorMessage(this.control.errors) : '';
   }
 }
