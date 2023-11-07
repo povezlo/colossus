@@ -7,14 +7,7 @@ import { FooterComponent, HeaderComponent } from '@shared/components';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    NgSwitch,
-    NgSwitchDefault,
-    NgSwitchCase,
-    RouterOutlet,
-    HeaderComponent,
-    FooterComponent,
-  ],
+  imports: [NgSwitch, NgSwitchDefault, NgSwitchCase, RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

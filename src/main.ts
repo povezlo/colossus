@@ -1,17 +1,8 @@
 import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import {
-  PreloadAllModules,
-  provideRouter,
-  withComponentInputBinding,
-  withPreloading,
-} from '@angular/router';
+import { PreloadAllModules, provideRouter, withComponentInputBinding, withPreloading } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import {
-  provideClientHydration,
-  BrowserModule,
-  bootstrapApplication,
-} from '@angular/platform-browser';
+import { provideClientHydration, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 
 import { provideToastr } from 'ngx-toastr';
 

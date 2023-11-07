@@ -1,13 +1,6 @@
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-  TrackByFunction,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, TrackByFunction, inject } from '@angular/core';
 
 import { Observable, map, tap } from 'rxjs';
 
@@ -20,15 +13,7 @@ import { StoreComponent, StoreListComponent } from './components';
 @Component({
   selector: 'app-stores',
   standalone: true,
-  imports: [
-    AsyncPipe,
-    NgIf,
-    NgForOf,
-    LoaderComponent,
-    StoreComponent,
-    StoreListComponent,
-    RouterOutlet,
-  ],
+  imports: [AsyncPipe, NgIf, NgForOf, LoaderComponent, StoreComponent, StoreListComponent, RouterOutlet],
   templateUrl: './stores-page.component.html',
   styleUrls: ['./stores-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

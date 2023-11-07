@@ -23,16 +23,16 @@ export const routes: Routes = [
           {
             path: 'create',
             loadComponent: () =>
-              import(
-                './components/store-widgets/create-store-widget/create-store-widget.component'
-              ).then(c => c.CreateStoreWidgetComponent),
+              import('./components/store-widgets/create-store-widget/create-store-widget.component').then(
+                c => c.CreateStoreWidgetComponent
+              ),
           },
           {
             path: 'edit/:id',
             loadComponent: () =>
-              import(
-                './components/store-widgets/edit-store-widget/edit-store-widget.component'
-              ).then(c => c.EditStoreWidgetComponent),
+              import('./components/store-widgets/edit-store-widget/edit-store-widget.component').then(
+                c => c.EditStoreWidgetComponent
+              ),
           },
         ],
       },

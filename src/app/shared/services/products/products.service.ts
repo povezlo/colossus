@@ -1,13 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map, of, shareReplay } from 'rxjs';
-import {
-  IProduct,
-  IProductStore,
-  IProductsMap,
-  ISharedStore,
-  IStore,
-  Pathname,
-} from '@shared/models';
+import { IProduct, IProductStore, IProductsMap, ISharedStore, IStore, Pathname } from '@shared/models';
 import { ApiClientBaseService } from '@shared/services/api';
 
 @Injectable({ providedIn: 'root' })
