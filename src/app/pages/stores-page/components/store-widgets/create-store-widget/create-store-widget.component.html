@@ -1,6 +1,6 @@
 <p class="text-white text-end mt-4">New Store</p>
 
-<div class="row">
+<div class="container">
   <div class="card bg-dark text-white">
     <form
       [formGroup]="storeForm"
@@ -9,46 +9,51 @@
       data-toggle="validator"
       role="form"
       class="needs-validation">
-      <div class="form-group">
-        <div class="row">
-          <app-input
-            [control]="storeName"
-            [required]="true"
-            formControlName="storeName"
-            placeholder="Name..."></app-input>
-        </div>
-        <!-- <div
-          formArrayName="store"
-          *ngFor="let item of storeFormControl; let i = index"
-          [@fadeIn]="showFields[i]">
-          <div [formGroupName]="i" class="row">
-            <div class="col-xs-12 col-12 col-md-6 mt-3">
-              <select
-                formControlName="select"
-                class="form-select"
-                aria-label="Default select example">
-                <option *ngFor="let opt of productMap.entries()">
-                  {{ opt | json }}
-                </option>
-              </select>
-            </div>
+      <div class="form-group col">
+        <app-input
+          [control]="storeName"
+          [required]="true"
+          formControlName="storeName"
+          placeholder="Name..."></app-input>
 
-            <div class="col-xs-12 col-12 col-md-6 mt-3">
-              <input
-                formControlName="note"
-                type="text"
-                placeholder="коментар"
-                class="form-control" />
+        <div class="form-group mb-3">
+          <div
+            formArrayName="store"
+            *ngFor="let item of storeFormControl; let i = index; trackBy: trackByFn"
+            [@fadeIn]="showFields[i]">
+            <div [formGroupName]="i" class="row">
+              <div class="col-12 col-md-6 mt-3 pe-1">
+                <select formControlName="productSelected" class="form-select" aria-label="Product select">
+                  <option *ngFor="let opt of productMap.values()" [value]="opt">
+                    {{ opt }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-3 mt-3 px-1">
+                <input formControlName="count" type="number" min="0" [value]="0" class="form-control" />
+              </div>
+              <ng-container *ngIf="storeFormControl.length - 1 === i; else deleteBtn">
+                <div class="col mt-3 ps-1 w-100">
+                  <button (click)="addFormGroup()" type="button" class="btn btn-primary btn-square">
+                    <span class="align-text-bottom text-white">+</span>
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-template #deleteBtn>
+                <div class="col mt-3 ps-1 w-100">
+                  <button (click)="deleteFormGroup(i)" type="button" class="btn btn-warning btn-square">
+                    <div class="align-text-top text-white">-</div>
+                  </button>
+                </div>
+              </ng-template>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
 
-      <div class="form-group mb-3">
-        <button (click)="addFormGroup()" type="button" class="btn link-primary px-0">додати ще</button>
-      </div>
-
-      <div class="form-group d-grid mb-3">
+      <div class="form-group d-grid mb-3 col-6">
         <button type="submit" class="btn btn-success">Save</button>
       </div>
     </form>

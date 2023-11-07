@@ -1,30 +1,35 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TrackByFunction, inject } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 import { Subscription } from 'rxjs';
-import { fadeInAnimation } from '@shared/utils';
+
+import { ProductsService, fadeInAnimation } from '@shared/utils';
 import { IProductsMap } from '@shared/models';
 import { InputComponent } from '@shared/controls';
 
 @Component({
   selector: 'app-create-store-widget',
   standalone: true,
-  imports: [ReactiveFormsModule, InputComponent],
+  imports: [ReactiveFormsModule, InputComponent, NgForOf, NgIf],
   templateUrl: './create-store-widget.component.html',
   styleUrls: ['./create-store-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation],
 })
 export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
-  @Input({ required: true }) productMap: IProductsMap = new Map();
+  productMap: IProductsMap = new Map();
   storeForm!: FormGroup;
 
   showFields: boolean[] = [true];
   hasError = false;
 
+
+  trackByFn: TrackByFunction<IProductsMap> = (_, index) => index;
   subscription = new Subscription();
 
   private readonly fb = inject(FormBuilder);
-  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly productsService = inject(ProductsService);
 
   get storeFormControl(): AbstractControl<any, any>[] {
     return (<FormArray>this.storeForm.get('store')).controls;
@@ -35,7 +40,9 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.productMap = this.getProductMap();
     this.initForm();
+    console.log(this.productMap);
     this.storeForm.valueChanges.subscribe((data: any) => {
       console.log(data);
     });
@@ -49,8 +56,8 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
     this.addFormGroup();
   }
 
-  createStore(): void {
-    this.storeForm.updateValueAndValidity();
+  getProductMap(): IProductsMap {
+    return this.productsService.cacheProducts;
   }
 
   addFormGroup(numberOfGroup = 1): void {
@@ -61,11 +68,24 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
     this.showFields.push(true);
   }
 
+  deleteFormGroup(index: number): void {
+    const productsArray = this.storeForm.get('store') as FormArray;
+
+    if (productsArray && index >= 0 && index < productsArray.length) {
+      productsArray.removeAt(index);
+    }
+    this.showFields.push(true);
+  }
+
   createFormGroup(): FormGroup {
     return this.fb.group({
-      productSelected: [''],
-      count: [''],
+      productSelected: [this.productMap.get(1)],
+      count: [0],
     });
+  }
+
+  createStore(): void {
+    this.storeForm.updateValueAndValidity();
   }
 
   ngOnDestroy(): void {
