@@ -24,7 +24,7 @@ app.get('/stores', (_, res) => {
   });
 });
 
-app.put('/createStores', cors(), (req, res) => {
+app.post('/createStores', cors(), (req, res) => {
   fs.readFile(STORES_JSON_FILE_PATH, (err, data) => {
     if (err) {
       console.error(err);
@@ -32,7 +32,7 @@ app.put('/createStores', cors(), (req, res) => {
     }
     const stores = JSON.parse(data);
     const newStore = req.body;
-    stores.push(newStore);
+    stores.push(newStore.params);
 
     fs.writeFile(STORES_JSON_FILE_PATH, JSON.stringify(stores, null, 2), err => {
       if (err) {

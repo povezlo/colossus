@@ -16,7 +16,7 @@ export class ApiStoresService {
   }
 
   createStore(params: IStore): Observable<ISuccessResponse> {
-    return this.http.put<ISuccessResponse>(Pathname.ROUTE_CREATE_STORES, params).pipe(
+    return this.http.post<ISuccessResponse>(Pathname.ROUTE_CREATE_STORES, params).pipe(
       tap(res => {
         this.notification.showSuccess(`${res.message}: ${params.name}`);
         this.refreshStores();

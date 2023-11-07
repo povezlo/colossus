@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { BASE_URL } from 'src/app/core';
 import { IHttpParams } from '@shared/models';
 
-const CONTENT_TYPE = 'application/x-www-form-urlencoded';
+const CONTENT_TYPE = 'application/json';
 @Injectable({ providedIn: 'root' })
 export class ApiClientBaseService {
   private readonly http = inject(HttpClient);
@@ -16,11 +16,10 @@ export class ApiClientBaseService {
     return this.http.get<T>(`${this.baseUrl}/${path}`);
   }
 
-  put<T>(path: string, params: IHttpParams): Observable<T> {
+  post<T>(path: string, params: IHttpParams): Observable<T> {
     const headers = new HttpHeaders({ 'Content-Type': CONTENT_TYPE });
-    const httpParams = new HttpParams({ fromObject: params });
 
-    return this.http.put<T>(`${this.baseUrl}/${path}`, { httpParams }, { headers });
+    return this.http.post<T>(`${this.baseUrl}/${path}`, { params }, { headers });
   }
 
   delete<T>(path: string, params: { name: string }): Observable<T> {

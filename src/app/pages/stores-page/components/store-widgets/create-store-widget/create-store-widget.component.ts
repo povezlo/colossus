@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TrackByFunction, inject } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgForOf, NgIf } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 
-import { ProductsService, fadeInAnimation } from '@shared/utils';
-import { IProductsMap } from '@shared/models';
+import { fadeInAnimation } from '@shared/utils';
+import { IProductsMap, IStore, IProductStore, ProductsFormArray } from '@shared/models';
+import { ProductsService, ApiStoresService } from '@shared/services';
 import { InputComponent } from '@shared/controls';
 
 @Component({
@@ -22,17 +23,21 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   storeForm!: FormGroup;
 
   showFields: boolean[] = [true];
-  hasError = false;
-
+  storeHasInventory = false;
 
   trackByFn: TrackByFunction<IProductsMap> = (_, index) => index;
   subscription = new Subscription();
 
   private readonly fb = inject(FormBuilder);
   private readonly productsService = inject(ProductsService);
+  private readonly storeService = inject(ApiStoresService);
 
-  get storeFormControl(): AbstractControl<any, any>[] {
-    return (<FormArray>this.storeForm.get('store')).controls;
+  get productsFormArray(): FormArray {
+    return this.storeForm.get('products') as FormArray;
+  }
+
+  get productsFormControl(): AbstractControl<any, any>[] {
+    return this.productsFormArray.controls;
   }
 
   get storeName(): AbstractControl<string, string> | null {
@@ -42,15 +47,13 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.productMap = this.getProductMap();
     this.initForm();
-    console.log(this.productMap);
-    this.storeForm.valueChanges.subscribe((data: any) => {
-      console.log(data);
-    });
+    this.setStoreInventory();
   }
 
   initForm(): void {
     this.storeForm = this.fb.group({
-      store: this.fb.array([]),
+      products: this.fb.array([]),
+      hasInventory: false,
       storeName: ['', [Validators.required, Validators.minLength(3)]],
     });
     this.addFormGroup();
@@ -61,34 +64,85 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   }
 
   addFormGroup(numberOfGroup = 1): void {
-    const productsArray = this.storeForm?.get('store') as FormArray;
     for (let i = 0; i < numberOfGroup; i++) {
-      productsArray.push(this.createFormGroup());
+      this.productsFormArray.push(this.createFormGroup());
     }
     this.showFields.push(true);
   }
 
   deleteFormGroup(index: number): void {
-    const productsArray = this.storeForm.get('store') as FormArray;
-
-    if (productsArray && index >= 0 && index < productsArray.length) {
-      productsArray.removeAt(index);
+    if (this.productsFormArray && index >= 0 && index < this.productsFormArray.length) {
+      this.productsFormArray.removeAt(index);
     }
     this.showFields.push(true);
   }
 
   createFormGroup(): FormGroup {
     return this.fb.group({
-      productSelected: [this.productMap.get(1)],
-      count: [0],
+      productSelected: [],
+      amount: [0],
     });
   }
 
   createStore(): void {
-    this.storeForm.updateValueAndValidity();
+    this.updateStores();
+    this.clearForm();
+    this.addFormGroup();
+    this.disabledStoreGroup();
+  }
+
+  updateStores(): void {
+    const { storeName, products } = this.storeForm.value;
+    const newStore: IStore = this.transformFormValueToProductStores(products, storeName);
+
+    const storesSubs = this.storeService.createStore(newStore).subscribe(store => {
+      console.log(store);
+    });
+
+    this.subscription.add(storesSubs);
+  }
+
+  clearForm(): void {
+    this.storeForm.reset();
+    this.productsFormArray.clear();
+  }
+
+  setStoreInventory(): void {
+    this.disabledStoreGroup();
+    const hasInventorySubs = this.storeForm?.get('hasInventory')?.valueChanges.subscribe((checked: boolean) => {
+      this.disabledStoreGroup(!checked);
+    });
+
+    this.subscription.add(hasInventorySubs);
+  }
+
+  disabledStoreGroup(checked = true): void {
+    this.storeHasInventory = checked;
+    this.storeHasInventory ? this.productsFormArray.disable() : this.productsFormArray.enable();
+  }
+
+  transformFormValueToProductStores(products: ProductsFormArray[], storeName: string): IStore {
+    const updateProducts = products.map((product: ProductsFormArray) => ({
+      amount: product.amount,
+      id: this.getKeyByMap(this.productMap, product.productSelected),
+    })) as IProductStore[];
+
+    return {
+      name: storeName,
+      products: updateProducts.filter(product => product.id),
+    };
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  getKeyByMap(map: Map<number, string>, value: string) {
+    for (const [key, val] of map) {
+      if (val === value) {
+        return key;
+      }
+    }
+    return null;
   }
 }
