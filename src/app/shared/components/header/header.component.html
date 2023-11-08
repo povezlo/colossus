@@ -13,22 +13,10 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarContents">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item text-white">
-          <a class="nav-link" routerLink="home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            Home
-          </a>
-        </li>
-        <li class="nav-item text-white">
-          <a
-            class="nav-link"
-            routerLink="stores"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: false }">
-            Stores
-          </a>
-        </li>
-      </ul>
+      <app-menu>
+        <app-menu-item routeName="home" [linkActiveExact]="true" title="Home" />
+        <app-menu-item routeName="stores" [linkActiveExact]="false" title="Stores" />
+      </app-menu>
     </div>
   </div>
 </nav>

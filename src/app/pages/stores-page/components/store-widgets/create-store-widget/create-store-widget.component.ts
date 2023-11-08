@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { fadeInAnimation } from '@shared/utils';
 import { IProductsMap, IStore, IProductStore, ProductsFormArray } from '@shared/models';
 import { ProductsService, ApiStoresService } from '@shared/services';
-import { InputComponent } from '@shared/controls';
+import { InputComponent } from '@shared/ui';
 
 @Component({
   selector: 'app-create-store-widget',
