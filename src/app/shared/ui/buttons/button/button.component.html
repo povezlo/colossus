@@ -1,0 +1,12 @@
+<button
+  class="btn text-white w-100"
+  [type]="type"
+  [class.btn-warning]="color === 'warning'"
+  [class.btn-primary]="color === 'primary'"
+  [class.btn-success]="color === 'success'"
+  [class.btn-danger]="color === 'danger'"
+  [class.btn-sm]="size === 'small'"
+  [class.btn-lg]="size === 'large'"
+  [disabled]="disabled">
+  <ng-content> </ng-content>
+</button>

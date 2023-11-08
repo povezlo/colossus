@@ -1,1 +1,3 @@
-export * from './input/input.component';
+export * from './input';
+export * from './checkbox';
+export * from './select';

@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef, Input, Output, EventEmitter, inject } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl } from '@angular/forms';
-import { PropagateFn } from 'src/app/shared/models';
-import { ValidatorService } from 'src/app/shared/services';
+
+import { PropagateFn } from '@shared/models';
+import { ValidatorService } from '@shared/services';
 
 @Component({
   selector: 'app-input',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -19,14 +19,16 @@ import { ValidatorService } from 'src/app/shared/services';
   ],
 })
 export class InputComponent implements ControlValueAccessor {
+  @Input() id: number | null = null;
   @Input() placeholder = '';
   @Input() label = '';
+  @Input() value = '';
+  @Input() type = 'text';
   @Input() required = false;
   @Input() isDisabled = false;
   @Input({ required: true }) control: AbstractControl | null = null;
   @Output() changed = new EventEmitter<string>();
 
-  value = '';
   private propagateChange?: PropagateFn<string>;
   private propagateTouched?: PropagateFn<void>;
 

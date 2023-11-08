@@ -4,13 +4,13 @@ import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 
 import { Observable, Subscription, filter, tap } from 'rxjs';
 
-import { IProduct } from 'src/app/shared/models';
-import { ApiStoresService } from '@shared/services';
+import { IProduct } from '@shared/models';
+import { ApiStoresService, ButtonComponent } from '@shared/services';
 
 @Component({
   selector: 'app-edit-store-widget',
   standalone: true,
-  imports: [AsyncPipe, NgIf, RouterLink],
+  imports: [AsyncPipe, NgIf, RouterLink, ButtonComponent],
   templateUrl: './edit-store-widget.component.html',
   styleUrls: ['./edit-store-widget.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -96,5 +96,18 @@
         "amount": 5
       }
     ]
+  },
+  {
+    "name": "Gold Store",
+    "products": [
+      {
+        "amount": 34,
+        "id": 1
+      },
+      {
+        "amount": 43,
+        "id": 3
+      }
+    ]
   }
 ]

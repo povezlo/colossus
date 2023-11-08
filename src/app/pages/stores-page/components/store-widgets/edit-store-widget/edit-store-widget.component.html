@@ -7,8 +7,12 @@
       <h6 class="card-subtitle mb-2 fs-6 fw-lighter">Selected store</h6>
 
       <section class="action-btn d-flex justify-content-between">
-        <button (click)="deleteStore()" type="button" class="btn btn-info btn-sm">Delete</button>
-        <button (click)="goBack()" type="button" class="btn btn-danger btn-sm">Cancel</button>
+        <div class="col-4">
+          <app-button size="small" color="warning" (click)="deleteStore()">Delete</app-button>
+        </div>
+        <div class="col-4">
+          <app-button size="small" color="danger" (click)="goBack()">Cancel</app-button>
+        </div>
       </section>
     </div>
   </div>

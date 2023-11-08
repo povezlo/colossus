@@ -2,25 +2,14 @@
 
 <div class="container">
   <div class="card bg-dark text-white">
-    <form
-      [formGroup]="storeForm"
-      (ngSubmit)="createStore()"
-      novalidate
-      data-toggle="validator"
-      role="form"
-      class="needs-validation">
+    <form [formGroup]="storeForm" (ngSubmit)="createStore()" novalidate role="form" class="needs-validation">
       <div class="form-group col">
-        <app-input
-          formControlName="storeName"
-          [control]="storeName"
-          [required]="true"
-          placeholder="Name..."></app-input>
+        <div class="form-group mt-3 mb-2">
+          <app-input formControlName="storeName" [control]="storeNameControl" [required]="true" placeholder="Name..." />
+        </div>
 
         <div class="form-group mt-3 mb-2">
-          <div class="form-check">
-            <input formControlName="hasInventory" class="form-check-input" type="checkbox" value="" id="checkStore" />
-            <label class="form-check-label small-text align-text-bottom" for="checkStore"> Store has inventary</label>
-          </div>
+          <app-checkbox formControlName="hasInventory" [control]="inventoryControl" label="Store has inventary" />
         </div>
 
         <div class="form-group mb-3">
@@ -30,37 +19,22 @@
             [@fadeIn]="showFields[i]">
             <div [formGroupName]="i" class="row">
               <div class="col-12 col-md-6 mb-3 pe-1">
-                <select formControlName="productSelected" class="form-select" aria-label="Product select">
-                  <option *ngFor="let opt of productMap.values()" [value]="opt">
-                    {{ opt }}
-                  </option>
-                </select>
+                <app-select formControlName="productSelected" [options]="getProductsFromMap" />
               </div>
 
               <div class="col-3 mb-3 px-lg-1">
-                <input formControlName="amount" type="number" min="0" [value]="0" class="form-control" />
+                <app-input formControlName="amount" [id]="i" [control]="item" type="number" [value]="'0'" />
               </div>
+
               <ng-container *ngIf="productsFormControl.length - 1 === i; else deleteBtn">
                 <div class="col mb-3 ps-1 w-100">
-                  <button
-                    (click)="addFormGroup()"
-                    type="button"
-                    class="btn btn-primary btn-square"
-                    [disabled]="storeHasInventory">
-                    <span class="align-text-bottom text-white">+</span>
-                  </button>
+                  <app-counter-button action="plus" [disabled]="storeHasInventory" (click)="addFormGroup()" />
                 </div>
               </ng-container>
 
               <ng-template #deleteBtn>
                 <div class="col mb-3 ps-1 w-100">
-                  <button
-                    (click)="deleteFormGroup(i)"
-                    type="button"
-                    class="btn btn-warning btn-square"
-                    [disabled]="storeHasInventory">
-                    <div class="align-text-top text-white">-</div>
-                  </button>
+                  <app-counter-button action="minus" [disabled]="storeHasInventory" (click)="deleteFormGroup(i)" />
                 </div>
               </ng-template>
             </div>
@@ -68,8 +42,8 @@
         </div>
       </div>
 
-      <div class="form-group d-grid mb-3 col-6">
-        <button type="submit" class="btn btn-success" [disabled]="storeName?.invalid">Save</button>
+      <div class="form-group mb-3 col-6">
+        <app-button type="submit" color="success" [disabled]="storeNameControl?.invalid">Save</app-button>
       </div>
     </form>
   </div>
