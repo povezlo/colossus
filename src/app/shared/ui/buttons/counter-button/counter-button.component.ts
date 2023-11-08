@@ -14,7 +14,7 @@ export class CounterButtonComponent {
   @Input() action: ButtonAction = 'plus';
   @Input() disabled = false;
 
-  onClicked = () => {
-    console.log('onClicked');
+  onClicked = (e: Event) => {
+    if (this.disabled) e.stopPropagation();
   };
 }

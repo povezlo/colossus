@@ -1,12 +1,11 @@
 <button
   class="btn text-white"
   type="button"
+  role="button"
   [class.btn-warning]="action === 'minus'"
   [class.btn-primary]="action === 'plus'"
-  disabled
-  role="button"
   aria-disabled="true"
-  (click)="onClicked()">
+  (click)="onClicked($event)">
   <ng-container *ngIf="action === 'plus'; else minus">
     <svg
       xmlns="http://www.w3.org/2000/svg"
