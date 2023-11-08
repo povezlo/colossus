@@ -1,22 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-3 shadow-none" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand text-info" routerLink="home">Colossus Technologies Inc</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarContents"
-      aria-controls="navbarContents"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarContents">
-      <app-menu>
-        <app-menu-item routeName="home" [linkActiveExact]="true" title="Home" />
-        <app-menu-item routeName="stores" [linkActiveExact]="false" title="Stores" />
-      </app-menu>
-    </div>
-  </div>
-</nav>
+<app-navbar>
+  <app-navbar-item routeName="home" [linkActiveExact]="true" title="Home" />
+  <app-navbar-item routeName="stores" [linkActiveExact]="false" title="Stores" />
+</app-navbar>

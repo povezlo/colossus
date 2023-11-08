@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MenuComponent, MenuItemComponent } from '../../ui';
+import { NavbarComponent, NavbarItemComponent } from '../../ui';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterModule, MenuComponent, MenuItemComponent],
+  imports: [NavbarComponent, NavbarItemComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,10 +1,10 @@
-<div class="row h-100">
-  <aside class="col-9 px-3 pt-4 border-end border-2">
+<div class="row h-100 d-flex">
+  <aside class="col-12 col-lg-9 px-3 pt-4 border-end border-2 order-lg-0 order-1">
     <div class="text-white text-center mt-4 mb-3">Stores</div>
     <app-loader>
       <app-store-list *ngIf="stores$ | async as stores">
         <app-store
-          class="col-3"
+          class="col-12 col-sm-6 col-md-3"
           *ngFor="let store of stores; let i = index; trackBy: trackByFn"
           [@fadeIn]="showFields[i]"
           [store]="store"
@@ -13,5 +13,5 @@
     </app-loader>
   </aside>
 
-  <aside class="col-3 px-3 pt-4"><router-outlet name="widget"></router-outlet></aside>
+  <aside class="col-12 col-lg-3 px-3 pt-4"><router-outlet name="widget"></router-outlet></aside>
 </div>
