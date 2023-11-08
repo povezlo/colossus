@@ -5,9 +5,17 @@ import { ApiClientBaseService } from '@shared/services/api';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  cacheProducts: IProductsMap = new Map();
+  private _cacheProducts: IProductsMap = new Map();
 
   private readonly http = inject(ApiClientBaseService);
+
+  get cacheProducts(): IProductsMap {
+    return this._cacheProducts;
+  }
+
+  set cacheProducts(map: IProductsMap) {
+    this._cacheProducts = map;
+  }
 
   getProducts(): Observable<IProductsMap> {
     if (this.cacheProducts.size) {
@@ -23,7 +31,21 @@ export class ProductsService {
     }
   }
 
-  getMostPopularyProducts(productsList: IProductStore[]): IProductStore | null {
+  transformStore(stores: IStore[], productMap: IProductsMap): ISharedStore[] {
+    return stores.map(store => {
+      const product = this.getMostPopularyProducts(store.products);
+      return {
+        ...store,
+        mostPopularProduct: {
+          name: product ? productMap.get(product.id) : null,
+          amount: product ? product.amount : null,
+        },
+        totalAmountProducts: this.getTotalAmountProduct(store.products),
+      };
+    });
+  }
+
+  private getMostPopularyProducts(productsList: IProductStore[]): IProductStore | null {
     if (!productsList || productsList.length === 0) {
       return null;
     }
@@ -33,7 +55,7 @@ export class ProductsService {
     }, productsList[0]);
   }
 
-  getTotalAmountProduct(products: IProductStore[]): number {
+  private getTotalAmountProduct(products: IProductStore[]): number {
     if (!products || products.length === 0) {
       return 0;
     }
@@ -49,19 +71,5 @@ export class ProductsService {
     });
 
     return map;
-  }
-
-  transformStore(stores: IStore[], productMap: IProductsMap): ISharedStore[] {
-    return stores.map(store => {
-      const product = this.getMostPopularyProducts(store.products);
-      return {
-        ...store,
-        mostPopularProduct: {
-          name: product ? productMap.get(product.id) : null,
-          amount: product ? product.amount : null,
-        },
-        totalAmountProducts: this.getTotalAmountProduct(store.products),
-      };
-    });
   }
 }

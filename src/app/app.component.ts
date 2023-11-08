@@ -9,6 +9,5 @@ import { FooterComponent, HeaderComponent } from '@shared/components';
   standalone: true,
   imports: [NgSwitch, NgSwitchDefault, NgSwitchCase, RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {}

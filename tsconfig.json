@@ -24,7 +24,9 @@
       "dom"
     ],
     "paths": {
-      "@shared*": ["src/app/shared/index.ts"]
+      "@shared*": ["src/app/shared/index.ts"],
+      "@pages*": ["src/app/pages/index.ts"],
+      "@core*": ["src/app/core/index.ts"],
     }
   },
   "angularCompilerOptions": {

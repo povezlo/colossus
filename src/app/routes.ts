@@ -1,6 +1,5 @@
-import { inject } from '@angular/core';
 import { Route } from '@angular/router';
-import { ProductsService } from './shared/services';
+import { productResolver } from '@core/resolvers';
 
 export const routes: Route[] = [
   {
@@ -11,8 +10,13 @@ export const routes: Route[] = [
   {
     path: 'stores',
     title: 'Store',
-    resolve: { productMap: () => inject(ProductsService).getProducts() },
+    resolve: { productMap: productResolver },
     loadChildren: () => import('./pages/stores-page/stores-page-routes').then(m => m.routes),
+  },
+  {
+    path: 'error',
+    title: 'Error Page',
+    loadComponent: () => import('./pages/error-page/error-page.component').then(m => m.ErrorPageComponent),
   },
   {
     path: '',
@@ -21,6 +25,6 @@ export const routes: Route[] = [
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'error',
   },
 ];

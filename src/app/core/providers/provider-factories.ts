@@ -1,5 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
-import { LoaderService, LoaderState } from '@shared*';
+import { LoaderService, LoaderState } from '@shared/components';
 import { BASE_URL } from '../injectTokens';
 
 export function provideBaseUrl(value: string) {

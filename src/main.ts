@@ -6,7 +6,8 @@ import { provideClientHydration, BrowserModule, bootstrapApplication } from '@an
 
 import { provideToastr } from 'ngx-toastr';
 
-import { provideBaseUrl, ErrorInterceptor, provideInitializeApp } from './app/core';
+import { ErrorInterceptor } from '@core/interceptors';
+import { provideBaseUrl, provideInitializeApp } from '@core/providers';
 import { environment } from './environments/environment.prod';
 import { routes } from './app/routes';
 import { AppComponent } from './app/app.component';

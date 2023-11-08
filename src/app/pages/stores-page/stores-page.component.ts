@@ -35,8 +35,6 @@ export class StoresPageComponent implements OnInit {
   }
 
   InitStores(): void {
-    this.loader.loaderStateSource$.next(LoaderState.loading);
-
     this.stores$ = this.storesService.getStores().pipe(
       map(stores => {
         if (!stores.length) {
