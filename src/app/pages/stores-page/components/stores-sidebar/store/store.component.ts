@@ -1,7 +1,7 @@
 import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMostPopularProduct, ISharedStore } from '@shared/models';
+import { IMostPopularProduct, ISharedStore, RoutePath } from '@shared/models';
 @Component({
   selector: 'app-store',
   standalone: true,
@@ -23,7 +23,7 @@ export class StoreComponent {
 
   openEditWidget(): void {
     if (!this.store) return;
-    this.router.navigate(['./', { outlets: { widget: ['edit', this.store.name] } }], {
+    this.router.navigate(['./', { outlets: { widget: [RoutePath.EDIT_STORE, this.store.name] } }], {
       relativeTo: this.route,
     });
   }

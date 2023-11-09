@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 
 import { Observable, Subscription, filter, tap } from 'rxjs';
 
-import { IProduct } from '@shared/models';
+import { IProduct, RoutePath } from '@shared/models';
 import { ApiStoresService, ButtonComponent } from '@shared/services';
 
 @Component({
@@ -26,6 +26,10 @@ export class EditStoreWidgetComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   ngOnInit(): void {
+    this.initParams();
+  }
+
+  initParams(): void {
     this.params$ = this.route.params.pipe(
       filter((params: Params | IProduct): params is IProduct => params.id),
       tap(params => (this.storeName = String(params.id)))
@@ -33,7 +37,7 @@ export class EditStoreWidgetComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    this.router.navigate(['create'], {
+    this.router.navigate([RoutePath.CREATE_STORE], {
       relativeTo: this.route.parent,
     });
   }

@@ -1,7 +1,15 @@
 import { NgForOf } from '@angular/common';
-import { Component, Input, forwardRef, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  forwardRef,
+  ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { PropagateFn } from '@shared/models';
+import { PrimitiveValue, PropagateFn } from '@shared/models';
 
 @Component({
   selector: 'app-select',
@@ -17,21 +25,25 @@ import { PropagateFn } from '@shared/models';
     },
   ],
 })
-export class SelectComponent implements ControlValueAccessor {
+export class SelectComponent implements AfterViewInit, ControlValueAccessor {
   @Input() options: string[] = [];
   @Input() isDisabled: boolean | null = null;
-  @Output() changed = new EventEmitter<string>();
+  @Output() changed = new EventEmitter<PrimitiveValue>();
 
-  value: string | null = null;
+  value: PrimitiveValue = null;
 
-  private propagateChange?: PropagateFn<string>;
+  private propagateChange?: PropagateFn<PrimitiveValue>;
   private propagateTouched?: PropagateFn<void>;
 
-  writeValue(value: string): void {
+  ngAfterViewInit(): void {
+    this.setStartOption();
+  }
+
+  writeValue(value: PrimitiveValue): void {
     this.value = value;
   }
 
-  registerOnChange(fn: PropagateFn<string>): void {
+  registerOnChange(fn: PropagateFn<PrimitiveValue>): void {
     this.propagateChange = fn;
   }
 
@@ -45,8 +57,16 @@ export class SelectComponent implements ControlValueAccessor {
 
   selectOption(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
+    this.emitChangedValue(value);
+  }
+
+  setStartOption() {
+    this.emitChangedValue(this.options[0]);
+  }
+
+  emitChangedValue(value: PrimitiveValue) {
     this.value = value;
     if (this.propagateChange) this.propagateChange(value);
-    this.changed.emit(this.value);
+    this.changed.emit(value);
   }
 }

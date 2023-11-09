@@ -5,7 +5,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 import { ProductsService, ApiStoresService } from '@shared/services';
-import { CreateStoreWidgetService } from '../services';
+import { WidgetStoreService } from '../services';
 import { fadeInAnimation } from '@shared/utils';
 import { IProductsMap } from '@shared/models';
 import { InputComponent, CheckboxComponent, SelectComponent } from '@shared/ui/controls';
@@ -32,7 +32,7 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   productMap: IProductsMap = new Map();
   storeForm!: FormGroup;
 
-  showFields: boolean[] = [true];
+  showAnimation: boolean[] = [true];
   storeHasInventory = false;
 
   trackByFn: TrackByFunction<IProductsMap> = (_, index) => index;
@@ -41,9 +41,9 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   private readonly fb = inject(FormBuilder);
   private readonly productsService = inject(ProductsService);
   private readonly storeService = inject(ApiStoresService);
-  private readonly createStoreService = inject(CreateStoreWidgetService);
+  private readonly widgetStoreService = inject(WidgetStoreService);
 
-  get getProductsFromMap(): string[] {
+  get productList(): string[] {
     return Array.from(this.productMap.values());
   }
 
@@ -93,7 +93,7 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
 
   addFormGroup(numberOfGroup = 1): void {
     for (let i = 0; i < numberOfGroup; i++) {
-      this.productsFormArray.push(this.createFormGroup());
+      this.productsFormArray.push(this.getNewFormGroup());
     }
   }
 
@@ -103,7 +103,7 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
     }
   }
 
-  createFormGroup(): FormGroup {
+  getNewFormGroup(): FormGroup {
     return this.fb.group({
       productSelected: [],
       amount: [0],
@@ -119,7 +119,7 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
 
   updateStores(): void {
     const { storeName, products } = this.storeForm.value;
-    const newStore = this.createStoreService.transformFormValueToProductStores(products, storeName, this.productMap);
+    const newStore = this.widgetStoreService.transformFormValueToNewStore(products, storeName, this.productMap);
 
     const storesSubs = this.storeService.createStore(newStore).subscribe();
 

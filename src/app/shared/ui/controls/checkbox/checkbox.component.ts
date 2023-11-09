@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, forwardRef, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, forwardRef, Input, EventEmitter, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl } from '@angular/forms';
 import { PropagateFn } from '@shared/models';
 
@@ -16,9 +16,10 @@ import { PropagateFn } from '@shared/models';
   ],
 })
 export class CheckboxComponent implements ControlValueAccessor {
-  @Input() label = 'Lorem ipsum';
+  @Input() label = '';
   @Input() value = false;
   @Input({ required: true }) control: AbstractControl | null = null;
+  @Output() changed = new EventEmitter<boolean>();
 
   isDisabled = false;
 
@@ -26,7 +27,8 @@ export class CheckboxComponent implements ControlValueAccessor {
   private propagateTouched?: PropagateFn<void>;
 
   writeValue(value: boolean): void {
-    this.value = value;
+    this.value = !!value;
+    this.emitChangedValue(this.value);
   }
 
   registerOnChange(fn: PropagateFn<boolean>): void {
@@ -43,10 +45,12 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   onChanged(evt: Event): void {
     const selected = (evt.target as HTMLInputElement).checked;
-    if (this.propagateChange) this.propagateChange(selected);
+    this.emitChangedValue(selected);
   }
 
-  isChecked(value: boolean): boolean {
-    return (this.value = value);
+  emitChangedValue(value: boolean) {
+    this.value = value;
+    if (this.propagateChange) this.propagateChange(value);
+    this.changed.emit(value);
   }
 }

@@ -1,1 +1,1 @@
-export * from './create-store-widget.service';
+export * from './widget-store.service';

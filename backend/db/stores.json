@@ -109,5 +109,39 @@
         "id": 3
       }
     ]
+  },
+  {
+    "name": "Silver Store",
+    "products": [
+      {
+        "amount": 4,
+        "id": 1
+      },
+      {
+        "amount": 18,
+        "id": 3
+      },
+      {
+        "amount": 1,
+        "id": 5
+      }
+    ]
+  },
+  {
+    "name": "Eldorado Store",
+    "products": [
+      {
+        "amount": 200,
+        "id": 1
+      },
+      {
+        "amount": 42,
+        "id": 4
+      },
+      {
+        "amount": 0,
+        "id": 1
+      }
+    ]
   }
 ]

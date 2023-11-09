@@ -12,7 +12,7 @@ export type ButtonAction = 'plus' | 'minus';
 })
 export class CounterButtonComponent {
   @Input() action: ButtonAction = 'plus';
-  @Input() disabled = false;
+  @Input() disabled: boolean | null = null;
 
   onClicked = (e: Event) => {
     if (this.disabled) e.stopPropagation();

@@ -31,7 +31,7 @@ export class ProductsService {
     }
   }
 
-  transformStore(stores: IStore[], productMap: IProductsMap): ISharedStore[] {
+  sharedStoreData(stores: IStore[], productMap: IProductsMap): ISharedStore[] {
     return stores.map(store => {
       const product = this.getMostPopularyProducts(store.products);
       return {

@@ -1,50 +1,51 @@
 <p class="text-white text-end mt-4 px-3">New Store</p>
 
-<div class="container">
-  <div class="card bg-dark text-white">
-    <form [formGroup]="storeForm" (ngSubmit)="createStore()" novalidate role="form" class="needs-validation">
-      <div class="form-group col">
-        <div class="form-group mt-3 mb-2">
-          <app-input formControlName="storeName" [control]="storeNameControl" [required]="true" placeholder="Name..." />
+<div class="card bg-dark text-white">
+  <form [formGroup]="storeForm" (ngSubmit)="createStore()" novalidate role="form" class="needs-validation">
+    <div class="form-group col">
+      <div class="form-group mb-2">
+        <app-input formControlName="storeName" [control]="storeNameControl" [required]="true" placeholder="Name..." />
+      </div>
+
+      <div class="form-group mt-3 mb-2">
+        <div class="form-check">
+          <input formControlName="hasInventory" class="form-check-input" type="checkbox" id="checkStore" />
+          <label class="form-check-label small-text align-text-bottom" for="checkStore">Store has inventary</label>
         </div>
+      </div>
 
-        <div class="form-group mt-3 mb-2">
-          <app-checkbox formControlName="hasInventory" [control]="inventoryControl" label="Store has inventary" />
-        </div>
-
-        <div class="form-group mb-3" [class.opacity-75]="storeHasInventory">
-          <div
-            formArrayName="products"
-            *ngFor="let item of productsFormControl; let i = index; trackBy: trackByFn"
-            [@fadeIn]="showFields[i]">
-            <div [formGroupName]="i" class="row">
-              <div class="col-12 col-md-6 mb-3 pe-1">
-                <app-select formControlName="productSelected" [options]="getProductsFromMap" />
-              </div>
-
-              <div class="col-3 mb-3 px-lg-1">
-                <app-input formControlName="amount" [id]="i" [control]="item" type="number" [value]="'0'" />
-              </div>
-
-              <ng-container *ngIf="productsFormControl.length - 1 === i; else deleteBtn">
-                <div class="col mb-3 ps-1 w-100">
-                  <app-counter-button action="plus" [disabled]="storeHasInventory" (click)="addFormGroup()" />
-                </div>
-              </ng-container>
-
-              <ng-template #deleteBtn>
-                <div class="col mb-3 ps-1 w-100">
-                  <app-counter-button action="minus" [disabled]="storeHasInventory" (click)="deleteFormGroup(i)" />
-                </div>
-              </ng-template>
+      <div class="form-group mb-3" [class.opacity-75]="storeHasInventory">
+        <div
+          formArrayName="products"
+          *ngFor="let item of productsFormControl; let i = index; trackBy: trackByFn"
+          [@fadeIn]="showAnimation[i]">
+          <div [formGroupName]="i" class="row">
+            <div class="col-12 col-md-6 mb-3 pe-1">
+              <app-select formControlName="productSelected" [options]="productList" />
             </div>
+
+            <div class="col-3 mb-3 px-lg-1">
+              <app-input formControlName="amount" [id]="i" [control]="item" type="number" [value]="'0'" />
+            </div>
+
+            <ng-container *ngIf="productsFormControl.length - 1 === i; else deleteBtn">
+              <div class="col mb-3 ps-1 w-100">
+                <app-counter-button action="plus" [disabled]="storeHasInventory" (click)="addFormGroup()" />
+              </div>
+            </ng-container>
+
+            <ng-template #deleteBtn>
+              <div class="col mb-3 ps-1 w-100">
+                <app-counter-button action="minus" [disabled]="storeHasInventory" (click)="deleteFormGroup(i)" />
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="form-group mb-3 col-6">
-        <app-button type="submit" color="success" [disabled]="storeNameControl?.invalid">Save</app-button>
-      </div>
-    </form>
-  </div>
+    <div class="form-group mb-3 col-6">
+      <app-button type="submit" color="success" [disabled]="storeNameControl?.invalid">Save</app-button>
+    </div>
+  </form>
 </div>

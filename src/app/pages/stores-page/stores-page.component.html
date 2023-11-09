@@ -6,7 +6,7 @@
         <app-store
           class="col-12 col-sm-6 col-md-3"
           *ngFor="let store of stores; let i = index; trackBy: trackByFn"
-          [@fadeIn]="showFields[i]"
+          [@fadeIn]="showAnimation[i]"
           [store]="store"
           [tabindex]="i" />
       </app-store-list>

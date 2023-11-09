@@ -28,7 +28,7 @@ export class StoresPageComponent implements OnInit {
   private loader = inject(LoaderService);
 
   trackByFn: TrackByFunction<ISharedStore> = (index, _) => index;
-  showFields: boolean[] = [true];
+  showAnimation: boolean[] = [true];
 
   ngOnInit(): void {
     this.InitStores();
@@ -42,7 +42,7 @@ export class StoresPageComponent implements OnInit {
           return [];
         }
         return this.productsService
-          .transformStore(stores, this.productMap)
+          .sharedStoreData(stores, this.productMap)
           .sort((a, b) => b.totalAmountProducts - a.totalAmountProducts);
       }),
       tap(() => {

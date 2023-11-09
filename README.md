@@ -1,27 +1,136 @@
 # Colossus
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.0.
+Тестове завдання Colossus. Створено на Ангулар 16+.
 
-## Development server
+## Запустити проект
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Запустіть `npm run server` для запуску сервера.
+2. Запустіть `npm run start` для запуску додатка. Перейдіть до `http://localhost:4200/`.
 
-## Code scaffolding
+## Опис web додатку для менеджменту магазинів клієнта.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+web додаток дозволяє побачити список магазинів, скорочену інформацію щодо стану їх інвенторію.
 
-## Build
+### web додаток містить дві сторінки:
+
+- Головна Home page
+- Сторінка магазинів Stores.
+
+### Опис сторінки магазинів Stores.
+
+    Зліва сторінки перелік магазинів у вигляді прямокутних карток. У кожній картці
+    можна побачити загальну кількість товарів, назву магазину, найбільш популярний товар
+    (товар, кількість якого найменша) та його кількість. Список магазинів відсортований у
+    порядку від магазину з найбільшої загальною кількістю товарів до магазину з
+    найменшою загальною кількістю.
+    При натисканні на картку з магазином справа з'явиться віджет Edit Store. За допомогою віджету
+    можна редагувати вибраний магазин. На даний момент є кнопка Delete для видалення магазину
+    та кнопка Cancel. При натисканні кнопки Cancel віджет Edit Store зміниться на віджет New Store
+
+    В правій частині розташован віджет New Store, за допомогою якої юзер може додати новий
+    магазин.
+    У першому полі інпут потрібно вказати назву магазину Це обов'язкове поле, не менше 3
+    символів. Якщо ні – видасть помилку валідації.
+    За допомогою чекбоксу Store has inventary є можливість вказати, чи в магазині вже є товари.
+    Якщо вибрати цю опцію активуються нижні опції, де можна вибрати товар та його кількість.
+
+    Обрати товар та його кількість можно за допомогою кнопок “+”, “-”
+
+    Після натискання на кнопку Save, в лівій частині з’явитися новий магазин, та форма очиститися.
+
+    При вдалій транзакції (додавання магазину, видалення магазину) чи при помилці сервера з'явиться візуальне сповіщення.
+
+## Технічний опис роботи додатку
+
+    Додаток створено з можливістю перевикористовувати та мастшабувати додаток в майбутньому.
+    Для цього використані path alias. Сервіси, ui компоненти можно розширювати, перевикористовувати та мастшабувати.
+    Додаток адаптований до мобільних пристроїв.
+
+1. Для роботи додатку треба запустити сервер `npm run server`.
+   Сервер написано на `node.js` за допомогою ліби `express`. Сервер розташований у папці `backend/server`.
+   У папці `db` розташовані два файли (`product.json` - список магазинів, `stores.json` - список продуктів).
+
+Сервер містить чотири ендпоінти.
+
+- `GET /stores` який повертає список магазинів із файлу `stores.json`.
+- `POST /createStores` який додає новий магазин у файл `stores.json` і повертає повідомлення про успіх чи не успіх.
+- `DELETE /deleteStores` видаляє магазин із файлу `stores.json` і повертає повідомлення про успіх чи не успіх..
+- `GET /products` повертає список продуктів із файлу `product.json`
+
+2. Для запуску додатку `npm run start`. Перейдіть до `http://localhost:4200/`.
+
+### Структура додатку
+
+Папка `app` містить папки `core`, `pages`, `shared`,
+
+У папці `core` міститься:
+
+- `injectTokens`: містить `BASE_URL` (дозволяє задати базовый url)
+- `interceptors`: містить `ErrorInterceptor` (перехоплює помилки з сервера, виводить повідомлення про помилку на екран )
+- `providers`: містить`provideInitializeApp` (дозволяє при старті додатку встановити стейт `loading` для `loader service`)
+- `resolvers`: містить `product.resolver` (дозволяє при переході на роут `stores`. попередньо завантажити дані для нього)
+
+У папці `pages` міститься три сторінки: ​
+
+- `error-page` : Сторінка, на яку буде перенаправлено користувач у разі помилки адресного рядка
+- `home-page` : Стартова сторінка
+- `stores-page`: Сторінка магазинів.
+
+  Сторінка `stores-page` містить компоненти:
+
+  - `stores-sidebar`: складається з компонентів `store-listL` та `store`
+  - `store-widget`: містить два виджета `create-store-widget`та `edit-store-widget` та сервис для роботи з ними `WidgetStoreService`
+
+У папці `shared` міститься три сторінки:
+
+- `models`: містить `interfaces`, `enums`
+- `components`: містить `footer`, `header`, `loader`
+- `pipes`: містить додатковий пайп `totalAmount` для розрахунку загальної кількості
+- `utils`: містить кастомну анімацію
+- `ui`: містить ui shared components `navbar`, `buttons` (`button`, `counter-button`), `controls` (`checkbox`, `select`, `input`)
+- `services`
+
+### Створені сервiси:
+
+- `api-client-base`: базовий сервіс для взаємодії сервером. Містить базові методи `get` `post`, `delete`. Можна розширювати у майбутньому
+- `validator`: дозволяє валідувати формконтролы. Можна розширювати у майбутньому
+- `notification`: дозволяє виводити візуальні сповіщення при вдалій чи не вдалій операції. Можна розширювати у майбутньому
+- `loader`: запускає лоадер. Дозволяє встановлювати стан залежно від результату завантаження даних `loading`, `loaded`, `no data`
+- `products` містить методи:
+  - `getProducts()` - якщо даних у кеші немає отримує їх від сервера та кешує їх, якщо є, то бере з кешу
+  - `sharedStoreData()` - розширює дані магазину. Додає додаткові поля для зручності роботи з ним надалі.
+  - `getMostPopularyProducts()` - дозволяє отримати найбільш популярний товар, кількість якого найменша
+  - `getTotalAmountProduct()` - дозволяє отримати суму загальної кількості товарів
+  - `transformToMap()` - перетворює дані на Map для зручності отримання та зберігання цих даних
+- `stores` містить методи:
+  - `getStores()` - дозволяє отримувати продукти із сервера;
+  - `createStore()` - дозволяє створити новий магазин
+  - `deleteStore()` - дозволяє видалити цей магазин
+  - `refreshStores()` - дозволяє оновити список магазинів в додатку
+
+### Використані додаткові ліби:
+
+frontend:
+
+- eslint
+- prettier
+- bootstrap 5+
+- ngx-toastr
+- tslib
+
+backend:
+
+- express
+- cors
+
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+### Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run test` to execute the unit tests via [Jest].
 
-## Running end-to-end tests
+### Running lint
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Run `npm run lint`

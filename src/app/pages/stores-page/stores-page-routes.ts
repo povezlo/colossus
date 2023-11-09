@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { StoresPageComponent } from './stores-page.component';
+import { RoutePath } from 'src/app/shared/models';
 
 export const routes: Routes = [
   {
@@ -8,7 +9,7 @@ export const routes: Routes = [
     redirectTo: 'widget',
   },
   {
-    path: 'widget',
+    path: RoutePath.WIDGET,
     component: StoresPageComponent,
     children: [
       {
@@ -18,17 +19,17 @@ export const routes: Routes = [
           {
             path: '',
             pathMatch: 'full',
-            redirectTo: 'create',
+            redirectTo: RoutePath.CREATE_STORE,
           },
           {
-            path: 'create',
+            path: RoutePath.CREATE_STORE,
             loadComponent: () =>
               import('./components/store-widgets/create-store-widget/create-store-widget.component').then(
                 c => c.CreateStoreWidgetComponent
               ),
           },
           {
-            path: 'edit/:id',
+            path: RoutePath.EDIT_STORE_By_Id,
             loadComponent: () =>
               import('./components/store-widgets/edit-store-widget/edit-store-widget.component').then(
                 c => c.EditStoreWidgetComponent
