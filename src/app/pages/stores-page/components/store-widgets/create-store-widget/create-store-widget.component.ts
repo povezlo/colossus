@@ -125,8 +125,7 @@ export class CreateStoreWidgetComponent implements OnInit, AfterViewInit, OnDest
   }
 
   updateStores(): void {
-    const { storeName, products } = this.storeForm.value;
-    const newStore = this.widgetStoreService.transformFormValueToNewStore(products, storeName, this.productMap);
+    const newStore = this.widgetStoreService.transformFormValueToNewStoreData(this.storeForm.value, this.productMap);
 
     const storesSubs = this.storeService.createStore(newStore).subscribe();
 
@@ -138,7 +137,7 @@ export class CreateStoreWidgetComponent implements OnInit, AfterViewInit, OnDest
     this.productsFormArray.clear();
   }
 
-  disabledStoreGroup(): void {
+  disableFormGroup(): void {
     this.storeHasInventory = !this.storeHasInventory;
     this.storeHasInventory ? this.productsFormArray.disable() : this.productsFormArray.enable();
   }

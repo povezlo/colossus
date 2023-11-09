@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
-import { ProductsFormArray, IStore, IProductStore, IProductsMap } from '@shared/models';
+import { IProductsFormArray, IStore, IProductStore, IProductsMap, IStoreFormValue } from '@shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetStoreService {
-  transformFormValueToNewStore(products: ProductsFormArray[], storeName: string, map: IProductsMap): IStore {
-    const updateProducts = products.map((product: ProductsFormArray) => ({
-      amount: Number(product.amount),
-      id: this.getKeyByMap(map, product.productSelected),
-    })) as IProductStore[];
+  transformFormValueToNewStoreData(formValue: IStoreFormValue, map: IProductsMap): IStore {
+    const { storeName, products } = formValue;
+    const updatedProducts = products ? this.getUpdatedProducts(products, map) : [];
 
     return {
       name: storeName,
-      products: updateProducts.filter(product => product.id),
+      products: updatedProducts,
     };
+  }
+
+  private getUpdatedProducts(products: IProductsFormArray[], map: IProductsMap): IProductStore[] {
+    return products
+      .map((product: IProductsFormArray) => ({
+        amount: Number(product.amount),
+        id: this.getKeyByMap(map, product.productSelected),
+      }))
+      .filter(product => product.id) as IProductStore[];
   }
 
   private getKeyByMap(map: Map<number, string>, value: string) {

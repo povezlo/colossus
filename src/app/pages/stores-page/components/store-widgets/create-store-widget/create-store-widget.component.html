@@ -11,8 +11,8 @@
         <app-checkbox
           formControlName="hasInventory"
           [control]="inventoryControl"
-          (changed)="disabledStoreGroup()"
-          label="Store has inventary"></app-checkbox>
+          (changed)="disableFormGroup()"
+          label="Store has inventary" />
       </div>
 
       <div class="form-group mb-3" [class.opacity-75]="storeHasInventory">
