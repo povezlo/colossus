@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, forwardRef, Input, Output, EventEmitter, inject } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl } from '@angular/forms';
 
+import { noop } from 'rxjs';
+
 import { PropagateFn } from '@shared/models';
 import { ValidatorService } from '@shared/services';
 
@@ -29,8 +31,8 @@ export class InputComponent implements ControlValueAccessor {
   @Input({ required: true }) control: AbstractControl | null = null;
   @Output() changed = new EventEmitter<string>();
 
-  private propagateChange?: PropagateFn<string>;
-  private propagateTouched?: PropagateFn<void>;
+  private propagateChange: PropagateFn<string> = noop;
+  private propagateTouched: PropagateFn<void> = noop;
 
   validatorService = inject(ValidatorService);
 
@@ -56,12 +58,12 @@ export class InputComponent implements ControlValueAccessor {
 
   onKeyup(eventInput: Event): void {
     this.value = (<HTMLInputElement>eventInput.target).value;
-    if (this.propagateChange) this.propagateChange(this.value);
+    this.propagateChange(this.value);
     this.changed.emit(this.value);
   }
 
   onBlur(): void {
-    if (this.propagateTouched) this.propagateTouched();
+    this.propagateTouched();
   }
 
   getErrorMessage(): string {

@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TrackByFunction, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  TrackByFunction,
+  inject,
+} from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgForOf, NgIf } from '@angular/common';
 
@@ -28,7 +36,7 @@ import { ButtonComponent, CounterButtonComponent } from '@shared/ui/buttons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation],
 })
-export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
+export class CreateStoreWidgetComponent implements OnInit, AfterViewInit, OnDestroy {
   productMap: IProductsMap = new Map();
   storeForm!: FormGroup;
 
@@ -59,14 +67,21 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
     return this.storeForm?.get('storeName');
   }
 
-  get inventoryControl(): AbstractControl<string, string> | null {
+  get inventoryControl(): AbstractControl<boolean> | null {
     return this.storeForm?.get('hasInventory');
   }
 
   ngOnInit(): void {
     this.setProductMap();
     this.initForm();
+  }
+
+  ngAfterViewInit(): void {
     this.setStoreInventory();
+  }
+
+  setProductMap(): void {
+    this.productMap = this.productsService.cacheProducts;
   }
 
   initForm(): void {
@@ -79,16 +94,8 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
   }
 
   setStoreInventory(): void {
-    this.disabledStoreGroup();
-    const hasInventorySubs = this.inventoryControl?.valueChanges.subscribe(checked => {
-      this.disabledStoreGroup(!checked);
-    });
-
-    this.subscription.add(hasInventorySubs);
-  }
-
-  setProductMap(): void {
-    this.productMap = this.productsService.cacheProducts;
+    this.storeHasInventory = true;
+    this.productsFormArray.disable();
   }
 
   addFormGroup(numberOfGroup = 1): void {
@@ -114,7 +121,7 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
     this.updateStores();
     this.clearForm();
     this.addFormGroup();
-    this.disabledStoreGroup();
+    this.setStoreInventory();
   }
 
   updateStores(): void {
@@ -131,8 +138,8 @@ export class CreateStoreWidgetComponent implements OnInit, OnDestroy {
     this.productsFormArray.clear();
   }
 
-  disabledStoreGroup(checked = true): void {
-    this.storeHasInventory = checked;
+  disabledStoreGroup(): void {
+    this.storeHasInventory = !this.storeHasInventory;
     this.storeHasInventory ? this.productsFormArray.disable() : this.productsFormArray.enable();
   }
 

@@ -9,6 +9,9 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+
+import { noop } from 'rxjs';
+
 import { PrimitiveValue, PropagateFn } from '@shared/models';
 
 @Component({
@@ -32,8 +35,8 @@ export class SelectComponent implements AfterViewInit, ControlValueAccessor {
 
   value: PrimitiveValue = null;
 
-  private propagateChange?: PropagateFn<PrimitiveValue>;
-  private propagateTouched?: PropagateFn<void>;
+  private propagateChange: PropagateFn<PrimitiveValue> = noop;
+  private propagateTouched: PropagateFn<void> = noop;
 
   ngAfterViewInit(): void {
     this.setStartOption();
@@ -66,7 +69,7 @@ export class SelectComponent implements AfterViewInit, ControlValueAccessor {
 
   emitChangedValue(value: PrimitiveValue) {
     this.value = value;
-    if (this.propagateChange) this.propagateChange(value);
+    this.propagateChange(value);
     this.changed.emit(value);
   }
 }

@@ -1,5 +1,8 @@
 import { Component, ChangeDetectionStrategy, forwardRef, Input, EventEmitter, Output } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl } from '@angular/forms';
+
+import { noop } from 'rxjs';
+
 import { PropagateFn } from '@shared/models';
 
 @Component({
@@ -16,15 +19,15 @@ import { PropagateFn } from '@shared/models';
   ],
 })
 export class CheckboxComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() value = false;
   @Input({ required: true }) control: AbstractControl | null = null;
+  @Input() value = false;
+  @Input() label = '';
+  @Input() id = 'defaultId';
+  @Input() isDisabled = false;
   @Output() changed = new EventEmitter<boolean>();
 
-  isDisabled = false;
-
-  private propagateChange?: PropagateFn<boolean>;
-  private propagateTouched?: PropagateFn<void>;
+  private propagateChange: PropagateFn<boolean> = noop;
+  private propagateTouched: PropagateFn<void> = noop;
 
   writeValue(value: boolean): void {
     this.value = !!value;
@@ -50,7 +53,7 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   emitChangedValue(value: boolean) {
     this.value = value;
-    if (this.propagateChange) this.propagateChange(value);
+    this.propagateChange(value);
     this.changed.emit(value);
   }
 }
