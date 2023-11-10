@@ -1,6 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map, of, shareReplay } from 'rxjs';
-import { IProduct, IProductStore, IProductsMap, ISharedStore, IStore, Pathname } from '@shared/models';
+import {
+  IWidgetProductData,
+  IProductsMap,
+  ISharedStoreData,
+  IStoreData,
+  Pathname,
+  IStoreProductListResponse,
+} from '@shared/models';
 import { ApiClientBaseService } from '@shared/services/api';
 
 @Injectable({ providedIn: 'root' })
@@ -21,9 +28,9 @@ export class ProductsService {
     if (this.cacheProducts.size) {
       return of(this.cacheProducts);
     } else {
-      return this.http.get<IProduct[]>(Pathname.ROUTE_PRODUCTS).pipe(
+      return this.http.get<IStoreProductListResponse>(Pathname.ROUTE_PRODUCTS).pipe(
         shareReplay(1),
-        map((response: IProduct[]) => {
+        map((response): IProductsMap => {
           this.cacheProducts = this.transformToMap(response);
           return this.cacheProducts;
         })
@@ -31,7 +38,7 @@ export class ProductsService {
     }
   }
 
-  sharedStoreData(stores: IStore[], productMap: IProductsMap): ISharedStore[] {
+  sharedStoreData(stores: IStoreData[], productMap: IProductsMap): ISharedStoreData[] {
     return stores.map(store => {
       const product = this.getMostPopularyProducts(store.products);
       return {
@@ -45,7 +52,7 @@ export class ProductsService {
     });
   }
 
-  private getMostPopularyProducts(productsList: IProductStore[]): IProductStore | null {
+  private getMostPopularyProducts(productsList: IWidgetProductData[]): IWidgetProductData | null {
     if (!productsList || productsList.length === 0) {
       return null;
     }
@@ -55,7 +62,7 @@ export class ProductsService {
     }, productsList[0]);
   }
 
-  private getTotalAmountProduct(products: IProductStore[]): number {
+  private getTotalAmountProduct(products: IWidgetProductData[]): number {
     if (!products || products.length === 0) {
       return 0;
     }
@@ -63,7 +70,7 @@ export class ProductsService {
     return products.reduce((total, product) => total + product.amount, 0);
   }
 
-  private transformToMap(product: IProduct[]): IProductsMap {
+  private transformToMap(product: IStoreProductListResponse): IProductsMap {
     const map = new Map();
 
     product.forEach(item => {

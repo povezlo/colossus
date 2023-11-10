@@ -1,7 +1,7 @@
 import { NgForOf, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IMostPopularProduct, ISharedStore, RoutePath } from '@shared/models';
+import { IMostPopularProduct, ISharedStoreData, RoutePath } from '@shared/models';
 @Component({
   selector: 'app-store',
   standalone: true,
@@ -11,7 +11,7 @@ import { IMostPopularProduct, ISharedStore, RoutePath } from '@shared/models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StoreComponent {
-  @Input({ required: true }) store: ISharedStore | null = null;
+  @Input({ required: true }) store: ISharedStoreData | null = null;
   @Input({ required: true }) tabindex!: number;
 
   private router = inject(Router);

@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
 
 import { Observable, Subscription, filter, tap } from 'rxjs';
 
-import { IProduct, RoutePath } from '@shared/models';
+import { IStoreProductData, RoutePath } from '@shared/models';
 import { ApiStoresService, ButtonComponent } from '@shared/services';
 
 @Component({
@@ -16,7 +16,7 @@ import { ApiStoresService, ButtonComponent } from '@shared/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditStoreWidgetComponent implements OnInit, OnDestroy {
-  params$: Observable<IProduct> | null = null;
+  params$: Observable<IStoreProductData> | null = null;
   storeName = '';
 
   private storesService = inject(ApiStoresService);
@@ -31,7 +31,7 @@ export class EditStoreWidgetComponent implements OnInit, OnDestroy {
 
   initParams(): void {
     this.params$ = this.route.params.pipe(
-      filter((params: Params | IProduct): params is IProduct => params.id),
+      filter((params: Params | IStoreProductData): params is IStoreProductData => params.id),
       tap(params => (this.storeName = String(params.id)))
     );
   }

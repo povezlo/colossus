@@ -6,7 +6,7 @@ import { Observable, map, tap } from 'rxjs';
 
 import { LoaderComponent, LoaderService, LoaderState } from '@shared/components';
 import { ApiStoresService, ProductsService } from '@shared/services';
-import { IProductsMap, ISharedStore } from '@shared/models';
+import { IProductsMap, ISharedStoreData } from '@shared/models';
 import { fadeInAnimation } from '@shared/utils';
 import { StoreComponent, StoreListComponent } from './components';
 
@@ -21,13 +21,13 @@ import { StoreComponent, StoreListComponent } from './components';
 })
 export class StoresPageComponent implements OnInit {
   @Input() productMap: IProductsMap = new Map();
-  stores$: Observable<ISharedStore[]> | null = null;
+  stores$: Observable<ISharedStoreData[]> | null = null;
 
   private storesService = inject(ApiStoresService);
   private productsService = inject(ProductsService);
   private loader = inject(LoaderService);
 
-  trackByFn: TrackByFunction<ISharedStore> = (index, _) => index;
+  trackByFn: TrackByFunction<ISharedStoreData> = (index, _) => index;
   showAnimation: boolean[] = [true];
 
   ngOnInit(): void {

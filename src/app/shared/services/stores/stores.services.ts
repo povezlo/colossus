@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, Subject, startWith, switchMap, tap } from 'rxjs';
-import { ApiClientBaseService } from '@shared/services';
-import { IStore, ISuccessResponse, NotificationService, Pathname } from '@shared/models';
+import { ApiClientBaseService, IStoreListResponse } from '@shared/services';
+import { IStoreData, ISuccessResponse, NotificationService, Pathname } from '@shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiStoresService {
@@ -11,11 +11,11 @@ export class ApiStoresService {
   private readonly http = inject(ApiClientBaseService);
   private readonly notification = inject(NotificationService);
 
-  getStores(): Observable<IStore[]> {
-    return this.refreshStores$.pipe(switchMap(() => this.http.get<IStore[]>(Pathname.ROUTE_STORES)));
+  getStores(): Observable<IStoreListResponse> {
+    return this.refreshStores$.pipe(switchMap(() => this.http.get<IStoreListResponse>(Pathname.ROUTE_STORES)));
   }
 
-  createStore(params: IStore): Observable<ISuccessResponse> {
+  createStore(params: IStoreData): Observable<ISuccessResponse> {
     return this.http.post<ISuccessResponse>(Pathname.ROUTE_CREATE_STORES, params).pipe(
       tap(res => {
         this.notification.showSuccess(`${res.message}: ${params.name}`);
@@ -24,7 +24,7 @@ export class ApiStoresService {
     );
   }
 
-  deleteStore(params: Pick<IStore, 'name'>): Observable<ISuccessResponse> {
+  deleteStore(params: Pick<IStoreData, 'name'>): Observable<ISuccessResponse> {
     return this.http.delete<ISuccessResponse>(Pathname.ROUTE_DELETE_STORES, params).pipe(
       tap(res => {
         this.notification.showSuccess(`${res.message}: ${params.name}`);

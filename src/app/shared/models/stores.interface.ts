@@ -1,13 +1,15 @@
-import { IMostPopularProduct, IProductStore } from './product.interface';
+import { IMostPopularProduct, IWidgetProductData } from './product.interface';
 
-export interface IStore {
+export interface IStoreData {
   name: string;
-  products: IProductStore[];
+  products: IWidgetProductData[];
 }
 
-export interface ISharedStore extends IStore {
+export interface ISharedStoreData extends IStoreData {
   name: string;
-  products: IProductStore[];
+  products: IWidgetProductData[];
   mostPopularProduct: IMostPopularProduct;
   totalAmountProducts: number;
 }
+
+export type IStoreListResponse = IStoreData[];
