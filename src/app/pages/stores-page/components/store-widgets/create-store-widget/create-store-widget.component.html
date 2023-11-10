@@ -31,13 +31,13 @@
 
             <ng-container *ngIf="productsFormControl.length - 1 === i; else deleteBtn">
               <div class="col mb-3 ps-1 w-100">
-                <app-counter-button action="plus" [disabled]="storeHasInventory" (click)="addFormGroup()" />
+                <app-counter-button actionType="plus" [disabled]="storeHasInventory" (click)="addFormGroup()" />
               </div>
             </ng-container>
 
             <ng-template #deleteBtn>
               <div class="col mb-3 ps-1 w-100">
-                <app-counter-button action="minus" [disabled]="storeHasInventory" (click)="deleteFormGroup(i)" />
+                <app-counter-button actionType="minus" [disabled]="storeHasInventory" (click)="deleteFormGroup(i)" />
               </div>
             </ng-template>
           </div>

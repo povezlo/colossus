@@ -1,17 +1,17 @@
-import { NgIf } from '@angular/common';
+import { NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
-export type ButtonAction = 'plus' | 'minus';
+export type ActionType = 'plus' | 'minus';
 
 @Component({
   selector: 'app-counter-button',
   standalone: true,
-  styles: ['.btn-square { width: 37px; height: 37px; }'],
-  imports: [NgIf],
+  styles: ['.btn-square { width: 2rem; height: 2rem }'],
+  imports: [NgSwitchCase, NgSwitch, NgSwitchDefault],
   templateUrl: './counter-button.component.html',
 })
 export class CounterButtonComponent {
-  @Input() action: ButtonAction = 'plus';
+  @Input() actionType: ActionType = 'plus';
   @Input() disabled: boolean | null = null;
 
   onClicked = (e: Event) => {
