@@ -18,29 +18,16 @@
       <div class="form-group mb-3" [class.opacity-75]="storeHasInventory">
         <div
           formArrayName="products"
-          *ngFor="let item of productsFormControl; let i = index; trackBy: trackByFn"
+          *ngFor="let control of productsFormControl; let i = index; trackBy: trackByFn"
           [@fadeIn]="showAnimation[i]">
-          <div [formGroupName]="i" class="row">
-            <div class="col-12 col-md-6 mb-3 pe-1">
-              <app-select formControlName="productSelected" [options]="productList" />
-            </div>
-
-            <div class="col-3 mb-3 px-lg-1">
-              <app-input formControlName="amount" [id]="i" [control]="item" type="number" [value]="'0'" />
-            </div>
-
-            <ng-container *ngIf="productsFormControl.length - 1 === i; else deleteBtn">
-              <div class="col mb-3 ps-1 w-100">
-                <app-counter-button actionType="plus" [disabled]="storeHasInventory" (click)="addFormGroup()" />
-              </div>
-            </ng-container>
-
-            <ng-template #deleteBtn>
-              <div class="col mb-3 ps-1 w-100">
-                <app-counter-button actionType="minus" [disabled]="storeHasInventory" (click)="deleteFormGroup(i)" />
-              </div>
-            </ng-template>
-          </div>
+          <app-form-group
+            [controlName]="i"
+            [productsFormControl]="control"
+            [productsFormControlLength]="productsFormControl.length"
+            [index]="i"
+            [isDisabled]="storeHasInventory"
+            (add)="addFormGroup()"
+            (delete)="deleteFormGroup(i)" />
         </div>
       </div>
     </div>

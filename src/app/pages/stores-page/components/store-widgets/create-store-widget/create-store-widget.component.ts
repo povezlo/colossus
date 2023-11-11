@@ -12,26 +12,17 @@ import { NgForOf, NgIf } from '@angular/common';
 
 import { Subscription } from 'rxjs/internal/Subscription';
 
-import { ProductsService, ApiStoresService } from '@shared/services';
 import { WidgetStoreService } from '../services';
+import { ProductsService, ApiStoresService, FormGroupComponent } from '@shared/services';
 import { fadeInAnimation } from '@shared/utils';
 import { IProductsMap } from '@shared/models';
-import { InputComponent, CheckboxComponent, SelectComponent } from '@shared/ui/controls';
-import { ButtonComponent, CounterButtonComponent } from '@shared/ui/buttons';
+import { InputComponent, CheckboxComponent } from '@shared/ui/controls';
+import { ButtonComponent } from '@shared/ui/buttons';
 
 @Component({
   selector: 'app-create-store-widget',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NgForOf,
-    NgIf,
-    CounterButtonComponent,
-    ButtonComponent,
-    InputComponent,
-    CheckboxComponent,
-    SelectComponent,
-  ],
+  imports: [ReactiveFormsModule, NgForOf, NgIf, ButtonComponent, InputComponent, CheckboxComponent, FormGroupComponent],
   templateUrl: './create-store-widget.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation],
@@ -125,7 +116,7 @@ export class CreateStoreWidgetComponent implements OnInit, AfterViewInit, OnDest
   }
 
   updateStores(): void {
-    const newStore = this.widgetStoreService.transformFormValueToNewStoreData(this.storeForm.value, this.productMap);
+    const newStore = this.widgetStoreService.transformFormValueToNewStoreData(this.storeForm.value);
 
     const storesSubs = this.storeService.createStore(newStore).subscribe();
 

@@ -1,11 +1,20 @@
-import { Injectable } from '@angular/core';
-import { IProductsFormArray, IStoreData, IWidgetProductData, IProductsMap, IStoreFormValue } from '@shared/models';
+import { Injectable, inject } from '@angular/core';
+import {
+  IProductsFormArray,
+  IStoreData,
+  IWidgetProductData,
+  IProductsMap,
+  IStoreFormValue,
+  ProductsService,
+} from '@shared/models';
 
 @Injectable({ providedIn: 'root' })
 export class WidgetStoreService {
-  transformFormValueToNewStoreData(formValue: IStoreFormValue, map: IProductsMap): IStoreData {
+  private productMap: IProductsMap = inject(ProductsService).cacheProducts;
+
+  transformFormValueToNewStoreData(formValue: IStoreFormValue): IStoreData {
     const { storeName, products } = formValue;
-    const updatedProducts = products ? this.getUpdatedProducts(products, map) : [];
+    const updatedProducts = products ? this.getUpdatedProducts(products, this.productMap) : [];
 
     return {
       name: storeName,
