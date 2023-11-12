@@ -13,16 +13,25 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 import { WidgetStoreService } from '../services';
-import { ProductsService, ApiStoresService, FormGroupComponent } from '@shared/services';
+import { ProductsService, ApiStoresService } from '@shared/services';
 import { fadeInAnimation } from '@shared/utils';
 import { IProductsMap } from '@shared/models';
 import { InputComponent, CheckboxComponent } from '@shared/ui/controls';
 import { ButtonComponent } from '@shared/ui/buttons';
+import { FormWidgetGroupComponent } from '../copmonents';
 
 @Component({
   selector: 'app-create-store-widget',
   standalone: true,
-  imports: [ReactiveFormsModule, NgForOf, NgIf, ButtonComponent, InputComponent, CheckboxComponent, FormGroupComponent],
+  imports: [
+    ReactiveFormsModule,
+    NgForOf,
+    NgIf,
+    ButtonComponent,
+    InputComponent,
+    CheckboxComponent,
+    FormWidgetGroupComponent,
+  ],
   templateUrl: './create-store-widget.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInAnimation],

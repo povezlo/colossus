@@ -3,12 +3,15 @@
     <div class="text-white text-center mt-4 mb-3">Stores</div>
     <app-loader>
       <app-store-list *ngIf="stores$ | async as stores">
-        <app-store
-          class="col-12 col-sm-6 col-md-3"
-          *ngFor="let store of stores; let i = index; trackBy: trackByFn"
-          [@fadeIn]="showAnimation[i]"
-          [store]="store"
-          [tabindex]="i" />
+        @for (store of stores; track $index) {
+          <app-store
+            class="col-12 col-sm-6 col-md-3"
+            [@fadeIn]="showAnimation[$index]"
+            [store]="store"
+            [tabindex]="$index" />
+        } @empty {
+          <div class="col-12 col-sm-6 col-md-3">No store</div>
+        }
       </app-store-list>
     </app-loader>
   </aside>

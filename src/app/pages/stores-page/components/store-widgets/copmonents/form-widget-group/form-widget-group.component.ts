@@ -12,9 +12,9 @@ import { IProductsMap } from '@shared/models';
   standalone: true,
   imports: [ReactiveFormsModule, forwardRef(() => CounterButtonComponent), SelectComponent, InputComponent, NgIf],
   viewProviders: [],
-  templateUrl: './form-group.component.html',
+  templateUrl: './form-widget-group.component.html',
 })
-export class FormGroupComponent implements OnInit {
+export class FormWidgetGroupComponent implements OnInit {
   @Input() controlName = 0;
   @Input() label = '';
   @Input() index = 0;
