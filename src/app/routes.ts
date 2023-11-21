@@ -15,6 +15,16 @@ export const routes: Route[] = [
     loadChildren: () => import('./pages/stores-page/stores-page-routes').then(m => m.routes),
   },
   {
+    path: RoutePath.DEFER,
+    title: 'Defer Page',
+    loadComponent: () => import('./pages/defer-page/defer-page.component').then(m => m.DeferPageComponent),
+  },
+  {
+    path: RoutePath.CHARTS,
+    title: 'Charts Page',
+    loadComponent: () => import('./pages/charts/charts.component').then(m => m.ChartsComponent),
+  },
+  {
     path: RoutePath.ERROR,
     title: 'Error Page',
     loadComponent: () => import('./pages/error-page/error-page.component').then(m => m.ErrorPageComponent),

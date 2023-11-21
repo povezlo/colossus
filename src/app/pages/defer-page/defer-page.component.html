@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    @for (item of sliderArr | async; track $index) {
+      <div class="col-12 m-3">
+        @defer (on viewport; prefetch on timer(1s)) {
+          <img [src]="item" alt="" />
+        } @placeholder {
+          <div>Peview</div>
+        } @loading {
+          <div>Loading...</div>
+        }
+      </div>
+    }
+
+    <div class="col-12 m-3">
+      <!-- @defer (on timer(5000ms)) {
+        <app-button>kgkjgjkg</app-button>
+      } @placeholder {
+        <h5>Loading...</h5>
+      } -->
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad hic tenetur asperiores, illum sunt est quam minus
+        vel praesentium nesciunt, ea sapiente. Doloribus enim libero similique sequi! Quod, sit odio! Eius sint ullam
+        architecto adipisci quia distinctio commodi eveniet? Dicta cupiditate, accusamus aperiam reprehenderit doloribus
+        ab quod adipisci! Soluta nobis error iure at. Esse possimus, error dolorem est in quo. Ipsum doloremque odit
+        voluptate quidem neque non nesciunt aspernatur accusamus delectus perspiciatis nam possimus eum sunt nemo, unde
+        dolor tempora aperiam magni provident tempore temporibus quisquam! Provident non culpa dolore? Dolorum rem ad
+        officiis rerum. Dolorem excepturi tempora esse accusamus, delectus nisi architecto totam voluptatem sed, nemo ad
+        veritatis ut dolor quia et eum sapiente quos eveniet nostrum neque. Facilis! Cupiditate exercitationem eveniet
+        tempora, animi eum modi quisquam nostrum perferendis earum! Quia itaque laborum facere quo, cum ex ut et aut
+        dolorem dignissimos laudantium? Tempore assumenda laboriosam distinctio repellendus ipsam. A doloremque maiores
+        saepe accusantium at dicta! Quidem at quo, ex perferendis sunt distinctio atque eos possimus repellat expedita
+        nam magni reprehenderit, beatae sit quos hic eum culpa praesentium veniam. Voluptatum, vitae! Earum id totam,
+        porro ullam culpa debitis vitae fuga in consequuntur incidunt vero qui consectetur explicabo error. Est
+        exercitationem voluptate debitis voluptatum veritatis ut eveniet consectetur sunt temporibus! Ipsum, debitis
+        ipsam. Quisquam rem eius sint ad nihil iste commodi saepe. Esse similique reiciendis molestiae laboriosam,
+        repudiandae ex perferendis iure ipsum eligendi consectetur! Aut amet neque necessitatibus consequatur odit?
+        Earum, odit culpa voluptatum ex odio incidunt! Eveniet est quos inventore eligendi enim eaque aut quaerat
+        molestiae ipsa fuga, et dolorum fugiat odit, consequuntur delectus maiores modi dolor quia molestias.
+        Consectetur nisi fugiat quam at. Nam aliquid, molestiae adipisci nulla, vitae rerum iure, eos voluptatem quo
+        error consequuntur id. Necessitatibus eaque dolore debitis porro fugit. Similique eveniet accusantium obcaecati
+        consequatur!
+      </p>
+    </div>
+    <div class="col-12 m-3">
+      <button (click)="isVisible = true">Show</button>
+      @defer (when isVisible) {
+        <img src="https://picsum.photos/1200/300?image=1027" alt="" />
+      } @placeholder {
+        Placeholder
+      }
+    </div>
+    <div class="col-12 m-3">
+      <div #greeting>Hello!</div>
+
+      @defer (on viewport) {
+        <img src="https://picsum.photos/1200/300?image=1010" alt="" />
+      } @placeholder {
+        <div>Calendar placeholder</div>
+      }
+    </div>
+  </div>
+</div>
+

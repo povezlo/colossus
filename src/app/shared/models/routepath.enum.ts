@@ -6,4 +6,6 @@ export enum RoutePath {
   EDIT_STORE_By_Id = 'edit/:id',
   WIDGET = 'widget',
   ERROR = 'error',
+  DEFER = 'defer',
+  CHARTS = 'charts',
 }

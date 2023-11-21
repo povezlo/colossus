@@ -1,6 +1,6 @@
 <p class="text-white text-end mt-4">Edit Store</p>
 
-<ng-container *ngIf="params$ | async as params; else noStore">
+@if (params$ | async; as params) {
   <div class="card bg-dark text-white border-white rounded-0">
     <div class="card-body">
       <h5 class="card-title">{{ params.id }}</h5>
@@ -16,6 +16,6 @@
       </section>
     </div>
   </div>
-</ng-container>
-
-<ng-template #noStore>No Store</ng-template>
+} @else {
+  No Store
+}

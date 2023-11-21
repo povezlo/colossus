@@ -1,16 +1,28 @@
-<div *ngIf="state$ | async as state">
-  <div [class.wrapper-spinner]="state === loaderState.loading">
-    <h5 *ngIf="state === loaderState.loading" class="text-white p-3">{{ state }}...</h5>
+@if (state$ | async; as state) {
+  <div>
+    <div [class.wrapper-spinner]="state === loaderState.loading">
+      @switch (state) {
+        @case (loaderState.loading) {
+          <h5 class="text-white p-3">{{ state }}...</h5>
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden text-white">Loading...</span>
+          </div>
+        }
 
-    <div *ngIf="state === loaderState.loading" class="spinner-border text-primary" role="status">
-      <span class="visually-hidden text-white">Loading...</span>
+        @case (loaderState.loaded) {
+          <section class="text-white">
+            <ng-content></ng-content>
+          </section>
+        }
+
+        @case (loaderState.error) {
+          <section class="text-white"><p>Oops! Failed to retrieve data</p></section>
+        }
+
+        @case (loaderState.noData) {
+          <section class="text-white"><p>Sorry, no data here.</p></section>
+        }
+      }
     </div>
-
-    <section class="text-white" *ngIf="state !== loaderState.loaded">
-      <p *ngIf="state === loaderState.error">Oops! Failed to retrieve data</p>
-      <p *ngIf="state === loaderState.noData">Sorry, no data here.</p>
-    </section>
-
-    <ng-content></ng-content>
   </div>
-</div>
+}

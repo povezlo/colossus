@@ -2,17 +2,15 @@
   <aside class="col-12 col-lg-9 px-3 pt-4 border-end border-2 order-lg-0 order-1">
     <div class="text-white text-center mt-4 mb-3">Stores</div>
     <app-loader>
-      <app-store-list *ngIf="stores$ | async as stores">
-        @for (store of stores; track $index) {
-          <app-store
-            class="col-12 col-sm-6 col-md-3"
-            [@fadeIn]="showAnimation[$index]"
-            [store]="store"
-            [tabindex]="$index" />
-        } @empty {
-          <div class="col-12 col-sm-6 col-md-3">No store</div>
-        }
-      </app-store-list>
+      @if (stores$ | async) {
+        <app-store-list>
+          @for (store of stores$ | async; track store.name; let i = $index) {
+            <app-store class="col-12 col-sm-6 col-md-3" [@fadeIn]="showAnimation[i]" [store]="store" [tabindex]="i" />
+          } @empty {
+            <div class="col-12 col-sm-6 col-md-3">No store</div>
+          }
+        </app-store-list>
+      }
     </app-loader>
   </aside>
 

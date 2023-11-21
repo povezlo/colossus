@@ -1,4 +1,4 @@
-<ng-container *ngIf="store; else noStore">
+@if (store) {
   <div
     [tabindex]="tabindex"
     (click)="openEditWidget()"
@@ -10,14 +10,16 @@
         <div class="small-text pt-1">{{ store.name }}</div>
       </div>
 
-      <div *ngIf="mostPopularProduct" class="d-flex flex-column text-end mt-auto">
-        <div class="card-text">Most Popular:</div>
-        <div class="most-popular-product-text">
-          {{ mostPopularProduct.name }} - In Stock {{ mostPopularProduct.amount }} items
+      @if (mostPopularProduct) {
+        <div class="d-flex flex-column text-end mt-auto">
+          <div class="card-text">Most Popular:</div>
+          <div class="most-popular-product-text">
+            {{ mostPopularProduct.name }} - In Stock {{ mostPopularProduct.amount }} items
+          </div>
         </div>
-      </div>
+      }
     </div>
   </div>
-</ng-container>
-
-<ng-template #noStore>No store </ng-template>
+} @else {
+  No store
+}

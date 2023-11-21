@@ -1,5 +1,7 @@
 <div class="input-group has-validation">
-  <span *ngIf="label" class="input-group-text" id="inputGroup">{{ label }}</span>
+  @if (label) {
+    <span class="input-group-text" id="inputGroup">{{ label }}</span>
+  }
 
   <input
     class="form-control"

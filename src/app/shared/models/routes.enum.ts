@@ -3,4 +3,6 @@ export enum Pathname {
   ROUTE_DELETE_STORES = 'deleteStores',
   ROUTE_CREATE_STORES = 'createStores',
   ROUTE_PRODUCTS = 'products',
+  ROUTE_DEFER = 'defer',
+  ROUTE_CHARTS = 'charts',
 }

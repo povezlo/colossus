@@ -8,14 +8,17 @@
       <app-input formControlName="amount" [id]="index" [control]="productsFormControl" type="number" [value]="'0'" />
     </div>
 
-    <div class="col mb-3 ps-1 w-100" *ngIf="productsFormControlLength - 1 === index; else deleteBtn">
+    @if (productsFormControlLength - 1 === index) {
+<div class="col mb-3 ps-1 w-100">
       <app-counter-button actionType="plus" [disabled]="isDisabled" (click)="addFormGroup()" />
     </div>
+} @else {
 
-    <ng-template #deleteBtn>
       <div class="col mb-3 ps-1 w-100">
         <app-counter-button actionType="minus" [disabled]="isDisabled" (click)="deleteFormGroup()" />
       </div>
-    </ng-template>
-  </div>
+    
+}
+
+      </div>
 </div>

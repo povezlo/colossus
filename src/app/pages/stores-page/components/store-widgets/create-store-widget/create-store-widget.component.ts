@@ -43,7 +43,7 @@ export class CreateStoreWidgetComponent implements OnInit, AfterViewInit, OnDest
   showAnimation: boolean[] = [true];
   storeHasInventory = false;
 
-  trackByFn: TrackByFunction<IProductsMap> = (_, index) => index;
+  trackByFn: TrackByFunction<IProductsMap> = (index, item) => item;
   subscription = new Subscription();
 
   private readonly fb = inject(FormBuilder);
