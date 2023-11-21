@@ -21,7 +21,7 @@ import { AppComponent } from './app/app.component';
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(BrowserModule, BrowserAnimationsModule),
-    provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules), withViewTransitions()),
+    provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
     provideClientHydration(),
     provideHttpClient(withInterceptors([ErrorInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
