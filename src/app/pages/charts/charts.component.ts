@@ -1,14 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { ChartComponent } from '@shared/ui';
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './charts.component.html',
+  imports: [ChartComponent],
   styleUrl: './charts.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChartsComponent {
-
-}
+export class ChartsComponent {}

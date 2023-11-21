@@ -27,12 +27,13 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "ngx-toastr": "^17.0.2",
+    "@amcharts/amcharts5": "^5.5.7",
     "rxjs": "~7.8.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.10",
+    "@angular-devkit/build-angular": "^17.0.0",
     "@angular-eslint/builder": "16.2.0",
     "@angular-eslint/eslint-plugin": "^16.2.0",
     "@angular-eslint/eslint-plugin-template": "16.2.0",
